@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- override spring base logging pattern -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="secureLoggerRestAppender" class="no.nav.familie.log.appender.SecureLoggerRestAppender"/>
+
+    <logger name="secureLogger" level="INFO" additivity="false">
+        <appender-ref ref="secureLoggerRestAppender"/>
+    </logger>
+
+    <logger name="no.nav" level="INFO"/>
+</configuration>
