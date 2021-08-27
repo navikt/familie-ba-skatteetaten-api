@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootConfiguration
 @ConfigurationPropertiesScan
 @ComponentScan(ApplicationConfig.pakkenavn)
-@EnableScheduling
 @EnableJwtTokenValidation(ignore = ["org.springframework","springfox.documentation.swagger"])
 class ApplicationConfig {
 
