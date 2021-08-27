@@ -1,0 +1,31 @@
+application:
+  name: familie-ba-skatteetaten-api
+
+server:
+  port: 8093
+  servlet:
+    context-path: /
+
+spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  main.banner-mode: "off"
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web:
+    exposure.include: info, health, metrics, prometheus
+    base-path: "/internal"
+  metrics.export.prometheus.enabled: true
+
+#no.nav.security.jwt:
+#  client:
+#    registration:
+#      familie-ba-sak:
+#        resource-url: ${FAMILIE_BA_SAK_URL}
+#        token-endpoint-url: ${AZUREAD_TOKEN_ENDPOINT_URL}
+#        grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
+#        scope: ${FAMILIE_BA_SAK_SCOPE}
+#        authentication:
+#          client-id: ${AZURE_APP_CLIENT_ID}
+#          client-secret: ${AZURE_APP_CLIENT_SECRET}
+#          client-auth-method: client_secret_basic
