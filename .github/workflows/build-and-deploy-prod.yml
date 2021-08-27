@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         run: |
-          docker build -t $IMAGE $IMAGE_LATEST .
+          docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
           docker push $IMAGE $IMAGE_LATEST
       - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v1
