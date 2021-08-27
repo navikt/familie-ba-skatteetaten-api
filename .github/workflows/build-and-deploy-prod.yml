@@ -35,7 +35,14 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
-          docker push $IMAGE $IMAGE_LATEST
+          docker push ${IMAGE}
+          docker push ${IMAGE_LATEST}
+      - name: Deploy til dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais-preprod.yaml
       - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
