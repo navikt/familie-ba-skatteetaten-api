@@ -45,7 +45,7 @@ spec:
     enabled: true
     scopes:
       exposes:
-        - name: "nav:familie/v1/barnetrygd/utvidet"
+        - name: "familie/v1/barnetrygd/utvidet"
           enabled: true
           product: "familie"
           allowedIntegrations:
