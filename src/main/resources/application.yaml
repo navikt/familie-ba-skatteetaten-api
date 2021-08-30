@@ -1,6 +1,9 @@
 application:
   name: familie-ba-skatteetaten-api
 
+api:
+  base-path: /api
+
 server:
   port: 8096
   servlet:

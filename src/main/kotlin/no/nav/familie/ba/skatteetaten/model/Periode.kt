@@ -1,4 +1,4 @@
-package org.openapitools.model
+package no.nav.familie.ba.skatteetaten.model
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -1,4 +1,4 @@
-package org.openapitools.api
+package no.nav.familie.ba.skatteetaten.service
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -6,14 +6,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import javax.servlet.http.HttpServletResponse
 import javax.validation.ConstraintViolationException
 
-// TODO Extend ApiException for custom exception handling, e.g. the below NotFound exception
 sealed class ApiException(msg: String, val code: Int) : Exception(msg)
 
 class NotFoundException(msg: String, code: Int = HttpStatus.NOT_FOUND.value()) : ApiException(msg, code)
 
 
 @ControllerAdvice
-class DefaultExceptionHandler {
+class ApiExceptionHandler {
 
     @ExceptionHandler(value = [ApiException::class])
     fun onApiException(ex: ApiException, response: HttpServletResponse): Unit =

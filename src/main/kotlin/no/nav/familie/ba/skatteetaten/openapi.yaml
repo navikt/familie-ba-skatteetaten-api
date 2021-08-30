@@ -120,7 +120,7 @@ components:
         brukere:
           type: array
           items:
-            $ref: '#/components/schemas/Person'
+            $ref: '#/components/schemas/Perioder'
 
     Person:
       title: Person
@@ -128,17 +128,26 @@ components:
         ident:
           type: string
           description: Person identifikator
+          example: 12010120020
         sisteVedtakPaaIdent:
           type: string
           description: Tidspunkt for siste vedtak (systemtidspunkt)
           format: date-time
-        perioder:
-          type: array
-          items:
-            $ref: '#/components/schemas/Periode'
       required:
         - ident
         - sisteVedtakPaaIdent
+
+    Perioder:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+        - type: object
+          required:
+            - perioder
+          properties:
+            perioder:
+              type: array
+              items:
+                $ref: '#/components/schemas/Periode'
 
     Periode:
       title: Periode
