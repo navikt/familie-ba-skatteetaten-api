@@ -4,6 +4,7 @@ import no.nav.familie.ba.skatteetaten.model.PerioderRequest
 import no.nav.familie.ba.skatteetaten.model.PerioderResponse
 import no.nav.familie.ba.skatteetaten.model.PersonerResponse
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
+import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@ProtectedWithClaims(issuer = "maskinporten", claimMap = ["scope=nav:familie/v1/barnetrygd/utvidet"])
 class SkatteetatenController(@Autowired(required = true) val service: SkatteetatenService) {
 
 
