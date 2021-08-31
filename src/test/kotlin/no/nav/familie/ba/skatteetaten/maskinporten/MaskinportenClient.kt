@@ -6,26 +6,29 @@ import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
 import com.nimbusds.jose.JWSSigner
 import com.nimbusds.jose.crypto.RSASSASigner
-
-import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
-import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.time.Instant
 import java.util.*
 
 
-@Service
-class MaskinportenClient {
+fun main() {
+    val jwkPrivate: String = System.getenv("MASKINPORTEN_CLIENT_JWK")
+    assert(jwkPrivate.isNotBlank())
+    val clientId: String = System.getenv("MASKINPORTEN_CLIENT_ID")
+    assert(clientId.isNotBlank())
 
+    println(MaskinportenClient().hentToken("nav:familie/v1/barnetrygd/utvidet", jwkPrivate, clientId))
+}
+
+class MaskinportenClient {
 
     private val SCOPE = "scope"
     private val GRANT_TYPE_VALUE = "urn:ietf:params:oauth:grant-type:jwt-bearer"
@@ -34,11 +37,6 @@ class MaskinportenClient {
 
     private val restTemplate = RestTemplate()
 
-    @Value("\${MASKINPORTEN_CLIENT_JWK}")
-    lateinit var jwkPrivate: String
-
-    @Value("\${MASKINPORTEN_CLIENT_ID}")
-    lateinit var clientId: String
 
     fun createSignedJWT(rsaJwk: RSAKey, claimsSet: JWTClaimsSet?): SignedJWT {
         return try {
@@ -54,7 +52,8 @@ class MaskinportenClient {
         }
     }
 
-    fun hentToken(scope: String?): String {
+
+    fun hentToken(scope: String, jwkPrivate: String, clientId: String, ): String {
         val rsaKey = RSAKey.parse(jwkPrivate)
         val time = Instant.now()
         val jwtClaimsSet = JWTClaimsSet.Builder()
@@ -72,14 +71,10 @@ class MaskinportenClient {
         requestBody.add("assertion", signedJWT.serialize())
         val httpEntity = HttpEntity(requestBody, headers)
         return restTemplate.exchange(
-                TOKEN_ENDPOINT,
-                HttpMethod.POST,
-                httpEntity,
-                String::class.java
-            ).body!!
+            TOKEN_ENDPOINT,
+            HttpMethod.POST,
+            httpEntity,
+            String::class.java
+        ).body!!
     }
-
-
-    data class TokenResponse(val access_token: String)
-
 }
