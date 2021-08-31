@@ -41,6 +41,21 @@ spec:
     - https://familie-ba-skatteetaten-api.nais.adeo.no
     - https://familie-ba-skatteetaten-api.intern.nav.no
     - https://familie-ba-skatteetaten-api.prod-fss-pub.nais.io
+  maskinporten:
+    enabled: true
+    scopes:
+      exposes:
+        - name: "v1/barnetrygd/utvidet"
+          enabled: true
+          product: "familie"
+          allowedIntegrations:
+            - maskinporten
+          atMaxAge: 120
+          consumers:
+            - name: "NAV"
+              orgno: "889640782"
+            - name: "Skatteetaten"
+              orgno: "974761076"
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
