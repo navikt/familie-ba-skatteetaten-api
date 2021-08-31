@@ -49,7 +49,7 @@ spec:
           product: "familie"
           allowedIntegrations:
             - maskinporten
-          atMaxAge: 120
+          atMaxAge: 680
           consumers:
             - name: "NAV"
               orgno: "889640782"

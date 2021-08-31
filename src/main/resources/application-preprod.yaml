@@ -1,4 +1,5 @@
-
-
-
-
+no.nav.security.jwt:
+  issuer.maskinporten:
+    discoveryurl: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
+    validation:
+      optional_claims: sub,aud,nbf

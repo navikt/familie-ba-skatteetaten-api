@@ -50,12 +50,14 @@ spec:
           product: "familie"
           allowedIntegrations:
             - maskinporten
-          atMaxAge: 120
+          atMaxAge: 680
           consumers:
             - name: "NAV"
               orgno: "889640782"
             - name: "Skatteetaten"
               orgno: "974761076"
+      consumes:
+        - name: "nav:familie/v1/barnetrygd/utvidet"
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
