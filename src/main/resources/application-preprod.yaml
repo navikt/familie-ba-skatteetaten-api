@@ -1,5 +1,2 @@
-no.nav.security.jwt:
-  issuer.maskinporten:
-    discoveryurl: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
-    validation:
-      optional_claims: sub,aud,nbf
+BA_SAK_SCOPE: api://dev-fss.teamfamilie.familie-ba-sak/.default
+BA_SAK_API_URL: https://familie-ba-sak.dev-fss-pub.nais.io/api

@@ -70,11 +70,13 @@ class MaskinportenClient {
         requestBody.add("grant_type", GRANT_TYPE_VALUE)
         requestBody.add("assertion", signedJWT.serialize())
         val httpEntity = HttpEntity(requestBody, headers)
-        return restTemplate.exchange(
+        val json =  restTemplate.exchange(
             TOKEN_ENDPOINT,
             HttpMethod.POST,
             httpEntity,
             String::class.java
         ).body!!
+
+        return json as String
     }
 }

@@ -60,6 +60,10 @@ spec:
   azure:
     application:
       enabled: true
+  accessPolicy:
+    outbound:
+      external:
+        - host: familie-ba-sak.dev-fss-pub.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod

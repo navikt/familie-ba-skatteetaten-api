@@ -11,8 +11,9 @@ server:
 
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-  main.banner-mode: "off"
-
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: "off"
 management:
   endpoint.health.show-details: always
   endpoint.health.probes.enabled: true
@@ -26,15 +27,32 @@ management:
 
 
 
-#no.nav.security.jwt:
-#  client:
-#    registration:
-#      familie-ba-sak:
-#        resource-url: ${FAMILIE_BA_SAK_URL}
-#        token-endpoint-url: ${AZUREAD_TOKEN_ENDPOINT_URL}
-#        grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
-#        scope: ${FAMILIE_BA_SAK_SCOPE}
-#        authentication:
-#          client-id: ${AZURE_APP_CLIENT_ID}
-#          client-secret: ${AZURE_APP_CLIENT_SECRET}
-#          client-auth-method: client_secret_basic
+no.nav.security.jwt:
+  issuer.maskinporten:
+    discoveryurl: ${MASKINPORTEN_WELL_KNOWN_URL}
+    validation:
+      optional_claims: sub,aud,nbf
+  client:
+    registration:
+      ba-sak-clientcredentials:
+        resource-url: ${BA_SAK_API_URL}
+        token-endpoint-url: ${AZUREAD_TOKEN_ENDPOINT_URL}
+        grant-type: client_credentials
+        scope: ${BA_SAK_SCOPE}
+        authentication:
+          client-id: ${AZURE_APP_CLIENT_ID}
+          client-secret: ${AZURE_APP_CLIENT_SECRET}
+          client-auth-method: client_secret_basic
+
+STS_URL: http://dummy
+CREDENTIAL_USERNAME: dummy
+CREDENTIAL_PASSWORD: dummy
+AZUREAD_TOKEN_ENDPOINT_URL: https://login.microsoftonline.com/${AZURE_APP_TENANT_ID}/oauth2/v2.0/token
+
+
+no:
+  nav:
+    security:
+      jwt:
+
+
