@@ -57,6 +57,9 @@ spec:
               orgno: "974761076"
       consumes:
         - name: "nav:familie/v1/barnetrygd/utvidet"
+  azure:
+    application:
+      enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod

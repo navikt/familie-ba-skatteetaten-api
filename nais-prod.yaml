@@ -55,6 +55,9 @@ spec:
               orgno: "889640782"
             - name: "Skatteetaten"
               orgno: "974761076"
+  azure:
+    application:
+      enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
