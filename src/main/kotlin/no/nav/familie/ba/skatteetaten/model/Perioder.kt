@@ -22,7 +22,5 @@ data class Perioder(
     @get:NotNull
     @field:Valid
     @field:JsonProperty("perioder") val perioder: List<Periode>
-) {
-
-}
+)
 

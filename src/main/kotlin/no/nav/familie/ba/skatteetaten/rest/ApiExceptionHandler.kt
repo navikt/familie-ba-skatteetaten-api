@@ -1,4 +1,4 @@
-package no.nav.familie.ba.skatteetaten.service
+package no.nav.familie.ba.skatteetaten.rest
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice

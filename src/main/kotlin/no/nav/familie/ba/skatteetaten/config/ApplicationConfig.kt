@@ -17,16 +17,15 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
-import org.springframework.scheduling.annotation.EnableScheduling
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan("no.nav.familie")
-@ComponentScan(ApplicationConfig.pakkenavn)
+@ComponentScan("no.nav.familie")
 @EnableJwtTokenValidation(ignore = ["org.springframework","springfox.documentation.swagger"])
 @EnableOAuth2Client
-@EnableScheduling
+@Import(RestTemplateAzure::class)
 class ApplicationConfig {
 
     @Bean
@@ -45,6 +44,8 @@ class ApplicationConfig {
         return filterRegistration
     }
 
+
+
     /**
      * Overskrever OAuth2HttpClient som settes opp i token-support som ikke kan få med objectMapper fra felles
      * pga .setVisibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE)
@@ -55,12 +56,10 @@ class ApplicationConfig {
     fun oAuth2HttpClient(): OAuth2HttpClient {
         return DefaultOAuth2HttpClient(
             RestTemplateBuilder()
-                                           .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                                           .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)))
+                .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)))
     }
-
     companion object {
         private val log = LoggerFactory.getLogger(this::class.java)
-        const val pakkenavn = "no.nav.familie"
     }
 }
