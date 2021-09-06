@@ -19,17 +19,17 @@ class SkatteetatenService(val basakClient: BasakClient) {
     fun hentPerioderMedUtvidetBarnetrygd(
         perioderRequest: PerioderRequest
     ): PerioderResponse {
-        return PerioderResponse(listOf(Perioder("01017000110", OffsetDateTime.now(), perioder = listOf(Periode("2020-02", Periode.MaxDelingsprosent._50, tomMaaned = "2022-12")))))
+        return basakClient.hentPerioder(perioderRequest)
     }
 
 
     @Scheduled(fixedDelay = 600000)
     fun triggerbasak() {
         basakClient.hentPersoner("2021")
+        basakClient.hentPerioder(PerioderRequest("2021", listOf("123")))
     }
 
     fun finnPersonerMedUtvidetBarnetrygd(aar: String): PersonerResponse {
-        basakClient.hentPersoner(aar)
-        return PersonerResponse(listOf(Person("12345678901", OffsetDateTime.now())))
+        return basakClient.hentPersoner(aar)
     }
 }
