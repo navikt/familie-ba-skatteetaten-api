@@ -16,7 +16,5 @@ data class Person(
 
     @get:NotNull
     @field:JsonProperty("sisteVedtakPaaIdent") val sisteVedtakPaaIdent: OffsetDateTime
-) {
-
-}
+)
 

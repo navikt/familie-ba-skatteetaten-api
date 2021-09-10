@@ -11,7 +11,5 @@ data class PersonerResponse(
 
     @field:Valid
     @field:JsonProperty("brukere") val brukere: List<Person> = emptyList()
-) {
-
-}
+)
 

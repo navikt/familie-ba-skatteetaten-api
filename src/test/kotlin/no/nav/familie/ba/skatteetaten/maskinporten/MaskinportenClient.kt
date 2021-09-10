@@ -38,10 +38,10 @@ class MaskinportenClient {
     private val restTemplate = RestTemplate()
 
 
-    fun createSignedJWT(rsaJwk: RSAKey, claimsSet: JWTClaimsSet?): SignedJWT {
+    private fun createSignedJWT(rsaJwk: RSAKey, claimsSet: JWTClaimsSet?): SignedJWT {
         return try {
             val header = JWSHeader.Builder(JWSAlgorithm.RS256)
-                .keyID(rsaJwk.getKeyID())
+                .keyID(rsaJwk.keyID)
                 .type(JOSEObjectType.JWT)
             val signedJWT = SignedJWT(header.build(), claimsSet)
             val signer: JWSSigner = RSASSASigner(rsaJwk.toPrivateKey())
@@ -53,7 +53,7 @@ class MaskinportenClient {
     }
 
 
-    fun hentToken(scope: String, jwkPrivate: String, clientId: String, ): String {
+    fun hentToken(scope: String, jwkPrivate: String, clientId: String): String {
         val rsaKey = RSAKey.parse(jwkPrivate)
         val time = Instant.now()
         val jwtClaimsSet = JWTClaimsSet.Builder()
@@ -65,16 +65,18 @@ class MaskinportenClient {
             .build()
         val signedJWT = createSignedJWT(rsaKey, jwtClaimsSet)
         val headers = HttpHeaders()
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
+        headers.contentType = MediaType.APPLICATION_FORM_URLENCODED
         val requestBody = LinkedMultiValueMap<Any, Any>()
         requestBody.add("grant_type", GRANT_TYPE_VALUE)
         requestBody.add("assertion", signedJWT.serialize())
         val httpEntity = HttpEntity(requestBody, headers)
-        return restTemplate.exchange(
+        val json =  restTemplate.exchange(
             TOKEN_ENDPOINT,
             HttpMethod.POST,
             httpEntity,
             String::class.java
         ).body!!
+
+        return json
     }
 }
