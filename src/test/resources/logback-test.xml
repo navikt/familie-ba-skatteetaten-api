@@ -6,7 +6,8 @@
               value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <appender name="secureLoggerRestAppender" class="no.nav.familie.log.appender.SecureLoggerRestAppender"/> <appender name="secureLoggerAppender" class="ch.qos.logback.core.ConsoleAppender">
+
+    <appender name="secureLoggerAppender" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
         <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %magenta(%logger{36}.%M) - %msg%n</pattern>
     </encoder>
