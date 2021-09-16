@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.core.NestedExceptionUtils
 import org.springframework.http.HttpStatus
+import org.springframework.http.converter.HttpMessageConversionException
+import org.springframework.web.HttpMediaTypeException
+import org.springframework.web.HttpMediaTypeNotSupportedException
+import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -29,6 +33,17 @@ class ApiExceptionHandler {
         logger.error("$className En feil har oppstått: ${mostSpecificThrowable.message}")
 
         response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "En feil har oppstått med callId ${callId}")
+    }
+
+    @ExceptionHandler(value = [HttpMessageConversionException::class, HttpMediaTypeNotSupportedException::class])
+    fun onSafeHttpExceptions(ex: HttpMessageConversionException, response: HttpServletResponse, request: HttpServletRequest) {
+        val callId = MDC.get(MDCConstants.MDC_CALL_ID) ?: IdUtils.generateId()
+        val mostSpecificThrowable = NestedExceptionUtils.getMostSpecificCause(ex)
+        val className = if (mostSpecificThrowable != null) "[${mostSpecificThrowable::class.java.name}] " else ""
+        secureLogger.error("$className En feil har oppstått: ${mostSpecificThrowable.message}", ex)
+        logger.error("$className En feil har oppstått: ${mostSpecificThrowable.message}")
+
+        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "En feil har oppstått med callId ${callId} message:${mostSpecificThrowable.message}")
     }
 
     @ExceptionHandler(value = [JwtTokenUnauthorizedException::class])
