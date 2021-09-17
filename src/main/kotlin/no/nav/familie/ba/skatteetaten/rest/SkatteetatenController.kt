@@ -1,9 +1,9 @@
 package no.nav.familie.ba.skatteetaten.rest
 
-import no.nav.familie.ba.skatteetaten.model.PerioderRequest
-import no.nav.familie.ba.skatteetaten.model.PerioderResponse
-import no.nav.familie.ba.skatteetaten.model.PersonerResponse
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPersonerResponse
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -31,7 +31,7 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
     )
     fun finnPersonerMedUtvidetBarnetrygd(
         @NotNull @RequestParam(value = "aar", required = true) aar: String
-    ): ResponseEntity<PersonerResponse> {
+    ): ResponseEntity<SkatteetatenPersonerResponse> {
         return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar), HttpStatus.valueOf(200))
     }
 
@@ -42,8 +42,8 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
         consumes = ["application/json"]
     )
     fun hentPerioderMedUtvidetBarnetrygd(
-        @Valid @RequestBody perioderRequest: PerioderRequest
-    ): ResponseEntity<PerioderResponse> {
+        @Valid @RequestBody perioderRequest: SkatteetatenPerioderRequest
+    ): ResponseEntity<SkatteetatenPerioderResponse> {
         return ResponseEntity(
             service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
             HttpStatus.valueOf(200)
