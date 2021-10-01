@@ -1,6 +1,10 @@
 package no.nav.familie.ba.skatteetaten.config
 
 import no.nav.familie.http.config.RestTemplateAzure
+import no.nav.familie.http.interceptor.BearerTokenClientInterceptor
+import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.http.interceptor.InternLoggerInterceptor
+import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
 import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.DefaultOAuth2HttpClient
@@ -17,13 +21,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.web.client.RestOperations
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan("no.nav.familie")
 @ComponentScan("no.nav.familie")
-@EnableJwtTokenValidation(ignore = ["org.springframework","springfox.documentation.swagger"])
+@EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
 @EnableOAuth2Client
 @Import(RestTemplateAzure::class)
 class ApplicationConfig {
@@ -45,6 +50,22 @@ class ApplicationConfig {
     }
 
 
+    @Bean("azure-longtimeout")
+    fun restTemplateJwtBearer(
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        internLoggerInterceptor: InternLoggerInterceptor,
+        bearerTokenClientInterceptor: BearerTokenClientInterceptor
+    ): RestOperations {
+        return RestTemplateBuilder()
+            .setReadTimeout(Duration.of(10, ChronoUnit.MINUTES))
+            .setConnectTimeout(Duration.of(10, ChronoUnit.MINUTES))
+            .additionalInterceptors(
+                consumerIdClientInterceptor,
+                bearerTokenClientInterceptor,
+                MdcValuesPropagatingClientInterceptor()
+            ).build()
+    }
+
 
     /**
      * Overskrever OAuth2HttpClient som settes opp i token-support som ikke kan få med objectMapper fra felles
@@ -57,8 +78,10 @@ class ApplicationConfig {
         return DefaultOAuth2HttpClient(
             RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)))
+                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+        )
     }
+
     companion object {
         private val log = LoggerFactory.getLogger(this::class.java)
     }

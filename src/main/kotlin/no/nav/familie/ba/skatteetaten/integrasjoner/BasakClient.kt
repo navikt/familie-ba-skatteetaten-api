@@ -18,7 +18,7 @@ private val logger = LoggerFactory.getLogger(BasakClient::class.java)
 
 @Component
 class BasakClient @Autowired constructor(@param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,
-                                       @Qualifier("azure") restOperations: RestOperations)
+                                       @Qualifier("azure-longtimeout") restOperations: RestOperations)
                                         : AbstractRestClient(restOperations, "skatt.sak") {
 
     fun hentPersoner(aar: String): SkatteetatenPersonerResponse {
