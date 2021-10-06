@@ -1,6 +1,6 @@
 package no.nav.familie.ba.skatteetaten.config
 
-import no.nav.familie.ba.skatteetaten.interceptor.RequestLoggingInterceptor
+import no.nav.familie.ba.skatteetaten.interceptor.MaskinportenTokenLoggingInterceptor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(RequestLoggingInterceptor())
+        registry.addInterceptor(MaskinportenTokenLoggingInterceptor())
         super.addInterceptors(registry)
     }
 }

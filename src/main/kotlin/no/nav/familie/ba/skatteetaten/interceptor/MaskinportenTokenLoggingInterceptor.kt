@@ -1,20 +1,21 @@
 package no.nav.familie.ba.skatteetaten.interceptor
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.Metrics
 import no.nav.security.token.support.core.jwt.JwtToken
 import no.nav.security.token.support.core.jwt.JwtTokenClaims
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.AsyncHandlerInterceptor
-import java.io.IOException
-import java.nio.charset.Charset
-import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
 @Component
-class RequestLoggingInterceptor: AsyncHandlerInterceptor {
+class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
+
+    private val consumerIdCounters = mutableMapOf<String, Counter>()
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val infoFraToken = hentInfoFraToken(request)
@@ -31,12 +32,19 @@ class RequestLoggingInterceptor: AsyncHandlerInterceptor {
         val infoFraToken = hentInfoFraToken(request)
 
         val melding = "[post-handle] $infoFraToken - ${request.method}: ${request.requestURI} (${response.status})"
+        val consumerId = hentConsumerId(request)
 
         if (HttpStatus.valueOf(response.status).isError) {
             LOG.warn(melding)
         } else {
             LOG.info(melding)
         }
+
+        if (!consumerIdCounters.containsKey(consumerId)) {
+            consumerIdCounters[consumerId] = Metrics.counter("maskinporten.token.consumer", "id", consumerId)
+        }
+        consumerIdCounters[consumerId]!!.increment()
+
         super.afterCompletion(request, response, handler, ex)
     }
 
@@ -50,6 +58,12 @@ class RequestLoggingInterceptor: AsyncHandlerInterceptor {
 
         val tokenData = "$issuer $clientId $scope $consumerId"
         return tokenData
+    }
+
+    private fun hentConsumerId(request: HttpServletRequest): String {
+        val jwtClaims = hentClaims(request)
+
+        return  if ((jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID") == null) "MANGLER" else (jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID").toString()
     }
 
     private fun hentClaims(request: HttpServletRequest): JwtTokenClaims? {
