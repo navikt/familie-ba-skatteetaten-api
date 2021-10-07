@@ -1,0 +1,7 @@
+AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/oauth2/v2.0/token
+
+MASKINPORTEN_WELL_KNOWN_URL: http://localhost:${mock-oauth2-server.port}/.well-known/oauth-authorization-server
+
+BA_SAK_API_URL: http://localhost:8385/api
+BA_SAK_SCOPE: api://dev-fss.teamfamilie.familie-ba-sak/.default
+

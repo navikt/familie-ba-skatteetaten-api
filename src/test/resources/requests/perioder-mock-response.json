@@ -1,0 +1,21 @@
+{
+  "data": {
+    "brukere": [
+      {
+        "ident": "0",
+        "sisteVedtakPaaIdent": "2021-10-07T21:07:32.802669",
+        "perioder": [
+          {
+            "fraMaaned": "2021-01-01",
+            "delingsprosent": "50",
+            "tomMaaned": "2021-01-01"
+          }
+        ]
+      }
+    ]
+  },
+  "status": "SUKSESS",
+  "melding": "Innhenting av data var vellykket",
+  "frontendFeilmelding": null,
+  "stacktrace": null
+}
