@@ -61,8 +61,8 @@ class ApiExceptionHandler {
         )
     }
 
-    @ExceptionHandler(value = [MissingServletRequestParameterException::class])
-    fun onConstraintViolation(ex: MissingServletRequestParameterException, response: HttpServletResponse) {
+    @ExceptionHandler(value = [MissingServletRequestParameterException::class,IllegalArgumentException::class])
+    fun onConstraintViolation(ex: Exception, response: HttpServletResponse) {
         logger.warn("Valideringsfeil av request. Se securelog for detaljer")
         secureLogger.warn("Valideringsfeil av request", ex)
 

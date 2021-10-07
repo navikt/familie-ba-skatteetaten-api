@@ -1,10 +1,12 @@
 package no.nav.familie.ba.skatteetaten.rest
 
+import no.nav.commons.foedselsnummer.FoedselsNr
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPersonerResponse
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,13 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.Year
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+import kotlin.math.min
 
 @RestController
 @Validated
 @RequestMapping("/api/v1")
-@ProtectedWithClaims(issuer = "maskinporten", claimMap = ["scope=nav:familie/v1/barnetrygd/utvidet"])
+@Unprotected
+//@ProtectedWithClaims(issuer = "maskinporten", claimMap = ["scope=nav:familie/v1/barnetrygd/utvidet"])
 class SkatteetatenController(@Autowired(required = true) val service: SkatteetatenService) {
 
 
@@ -30,9 +36,10 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
         produces = ["application/json;charset=UTF-8"]
     )
     fun finnPersonerMedUtvidetBarnetrygd(
-        @NotNull @RequestParam(value = "aar", required = true) aar: String
+        @Size(min = 4, max = 4, message = "Ugyldig format, må være år med 4 siffer")
+        @RequestParam( value = "aar", required = true) aar: Year
     ): ResponseEntity<SkatteetatenPersonerResponse> {
-        return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar), HttpStatus.valueOf(200))
+        return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.valueOf(200))
     }
 
 
@@ -44,9 +51,19 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
     fun hentPerioderMedUtvidetBarnetrygd(
         @Valid @RequestBody perioderRequest: SkatteetatenPerioderRequest
     ): ResponseEntity<SkatteetatenPerioderResponse> {
-        return ResponseEntity(
-            service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
-            HttpStatus.valueOf(200)
-        )
+
+       erSkatteetatenPeriodeRequestGyldig(perioderRequest)
+
+       Return ResponseEntity(
+                service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
+                HttpStatus.valueOf(200)
+            )
+
+    }
+
+    fun erSkatteetatenPeriodeRequestGyldig(perioderRequest: SkatteetatenPerioderRequest){
+        for (personident: String in perioderRequest.identer) {
+            require("""\d{11}""".toRegex().matches(personident)) { "Ikke et gyldig fødselsnummer: $personident" }
+        }
     }
 }
