@@ -1,6 +1,5 @@
 package no.nav.familie.ba.skatteetaten.config
 
-import no.nav.familie.http.config.RestTemplateAzure
 import no.nav.familie.http.interceptor.BearerTokenClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.InternLoggerInterceptor
@@ -27,10 +26,12 @@ import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan("no.nav.familie")
-@ComponentScan("no.nav.familie")
+@ComponentScan("no.nav.familie.ba")
 @EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
 @EnableOAuth2Client
-@Import(RestTemplateAzure::class)
+@Import(ConsumerIdClientInterceptor::class,
+        InternLoggerInterceptor::class,
+        BearerTokenClientInterceptor::class)
 class ApplicationConfig {
 
     @Bean

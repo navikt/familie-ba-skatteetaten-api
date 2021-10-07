@@ -45,10 +45,3 @@ no.nav.security.jwt:
           client-auth-method: client_secret_basic
 
 AZUREAD_TOKEN_ENDPOINT_URL: https://login.microsoftonline.com/${AZURE_APP_TENANT_ID}/oauth2/v2.0/token
-
-#intern http-client trenger disse for å wire opp spring
-STS_URL: http://ikkeibruk
-CREDENTIAL_USERNAME: ikke_i_bruk
-CREDENTIAL_PASSWORD: ikke_i_bruk
-
-
