@@ -1,6 +1,3 @@
 MASKINPORTEN_WELL_KNOWN_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/v2.0/.well-known/openid-configuration
 BA_SAK_API_URL: https://familie-ba-sak.dev.adeo.no/api
 AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/oauth2/v2.0/token
-
-logging:
-  config: "classpath:logback-test.xml"
