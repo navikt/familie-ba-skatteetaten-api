@@ -14,7 +14,9 @@ class SkatteetatenControllerTest {
         val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(aar = "2020",
                                                                       identer = listOf("12345678910", "123"))
 
-        Assertions.assertEquals(skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest), false)
+        Assertions.assertThrows(
+            IllegalArgumentException::class.java
+        ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
     }
 
     @Test
@@ -24,6 +26,20 @@ class SkatteetatenControllerTest {
         val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(aar = "2020",
                                                                       identer = listOf("27903249671"))
 
-        Assertions.assertEquals(skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest), true)
+        skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest)
+
+    }
+
+    @Test
+    fun `erSkatteetatenPeriodeRequestGyldig skal kaste feil ved ugyldig år` () {
+        val skatteetatenController  = SkatteetatenController(mockk())
+
+        val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(aar = "sdsdf",
+                                                                      identer = listOf("27903249671"))
+
+        Assertions.assertThrows(
+            IllegalArgumentException::class.java
+        ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
+
     }
 }
