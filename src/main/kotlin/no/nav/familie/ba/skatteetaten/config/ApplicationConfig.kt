@@ -84,6 +84,6 @@ class ApplicationConfig {
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(this::class.java)
+        private val log = LoggerFactory.getLogger(ApplicationConfig::class.java)
     }
 }
