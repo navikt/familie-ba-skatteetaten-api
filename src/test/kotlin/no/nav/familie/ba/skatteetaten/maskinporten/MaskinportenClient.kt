@@ -9,6 +9,7 @@ import com.nimbusds.jose.crypto.RSASSASigner
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
+import no.nav.familie.kontrakter.felles.objectMapper
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -25,7 +26,22 @@ fun main() {
     val clientId: String = System.getenv("MASKINPORTEN_CLIENT_ID")
     assert(clientId.isNotBlank())
 
-    println(MaskinportenClient().hentToken("nav:familie/v1/barnetrygd/utvidet", jwkPrivate, clientId))
+    val token = MaskinportenClient().hentToken("nav:familie/v1/barnetrygd/utvidet", jwkPrivate, clientId)
+
+    println(token)
+
+    val jsonNodes = objectMapper.readTree(token)
+    val restTemplate = RestTemplate()
+    val httpHeaders = HttpHeaders()
+    httpHeaders.accept = listOf(MediaType.APPLICATION_JSON)
+    httpHeaders.setBearerAuth(jsonNodes.get("access_token").asText())
+
+    val entity: HttpEntity<*> = HttpEntity<Any?>(httpHeaders)
+
+    val response = restTemplate.exchange(
+        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021", HttpMethod.GET, entity, String::class.java
+    )
+    println(response.body)
 }
 
 class MaskinportenClient {

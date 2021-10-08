@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.lang.IllegalArgumentException
 import java.time.Year
 import javax.validation.Valid
 import javax.validation.constraints.Max
@@ -62,6 +63,7 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
 
     fun erSkatteetatenPeriodeRequestGyldig(perioderRequest: SkatteetatenPerioderRequest){
         Year.of(perioderRequest.aar.toInt())
+        if (perioderRequest.identer.size > 10000) throw IllegalArgumentException("Maks antall identer er 10000")
         for (personident: String in perioderRequest.identer) {
             require("""\d{11}""".toRegex().matches(personident)) { "Ikke et gyldig fødselsnummer: $personident" }
         }
