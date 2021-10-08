@@ -13,8 +13,10 @@ import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import java.time.DateTimeException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.validation.ConstraintViolationException
 
 
 @ControllerAdvice
@@ -61,8 +63,8 @@ class ApiExceptionHandler {
         )
     }
 
-    @ExceptionHandler(value = [MissingServletRequestParameterException::class])
-    fun onConstraintViolation(ex: MissingServletRequestParameterException, response: HttpServletResponse) {
+    @ExceptionHandler(value = [MissingServletRequestParameterException::class,IllegalArgumentException::class, ConstraintViolationException::class, DateTimeException::class])
+    fun onConstraintViolation(ex: Exception, response: HttpServletResponse) {
         logger.warn("Valideringsfeil av request. Se securelog for detaljer")
         secureLogger.warn("Valideringsfeil av request", ex)
 
