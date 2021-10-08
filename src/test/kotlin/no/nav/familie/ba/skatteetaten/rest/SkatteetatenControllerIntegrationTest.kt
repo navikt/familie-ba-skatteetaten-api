@@ -56,6 +56,15 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     }
 
     @Test
+    internal fun `personer - feil fra ba-sak`() {
+        enqueJson(Ressurs.failure<String>(errorMessage = "Finner ikke person"))
+        val response = finnPersoner<String>()
+
+        assertThat(response.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
+        assertThat(response.body!!).contains("En feil har oppstått med callId ")
+    }
+
+    @Test
     internal fun `personer - kall uten år`() {
         val response = finnPersoner<String>(aar = null)
 
