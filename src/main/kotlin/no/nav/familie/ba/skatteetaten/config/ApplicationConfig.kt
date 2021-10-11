@@ -51,7 +51,7 @@ class ApplicationConfig {
 
     @Bean
     fun securityHeaderFilter(): FilterRegistrationBean<SecurityHeaderFilter> {
-        log.info("Registering LogFilter filter")
+        log.info("Registering SecurityHeaderFilter filter")
         val filterRegistration: FilterRegistrationBean<SecurityHeaderFilter> = FilterRegistrationBean()
         filterRegistration.filter = SecurityHeaderFilter()
         filterRegistration.order = 2
