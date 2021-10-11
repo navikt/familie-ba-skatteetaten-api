@@ -14,6 +14,8 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: "off"
+  cache:
+    type: none
 management:
   endpoint.health.show-details: always
   endpoint.health.probes.enabled: true
