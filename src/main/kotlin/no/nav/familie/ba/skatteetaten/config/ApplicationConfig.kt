@@ -49,6 +49,15 @@ class ApplicationConfig {
         return filterRegistration
     }
 
+    @Bean
+    fun securityHeaderFilter(): FilterRegistrationBean<SecurityHeaderFilter> {
+        log.info("Registering SecurityHeaderFilter filter")
+        val filterRegistration: FilterRegistrationBean<SecurityHeaderFilter> = FilterRegistrationBean()
+        filterRegistration.filter = SecurityHeaderFilter()
+        filterRegistration.order = 2
+        return filterRegistration
+    }
+
 
     @Bean("azure-longtimeout")
     fun restTemplateJwtBearer(
@@ -83,6 +92,7 @@ class ApplicationConfig {
     }
 
     companion object {
+
         private val log = LoggerFactory.getLogger(this::class.java)
     }
 }

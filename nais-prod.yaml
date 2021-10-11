@@ -55,6 +55,8 @@ spec:
               orgno: "889640782"
             - name: "Skatteetaten"
               orgno: "974761076"
+      consumes:
+        - name: "nav:familie/v1/barnetrygd/utvidet"
   azure:
     application:
       enabled: true
