@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.AsyncHandlerInterceptor
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -28,6 +29,10 @@ class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
                             response: HttpServletResponse,
                             handler: Any,
                             ex: Exception?) {
+
+        val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0,15)) else Pair(headerName, request.getHeader(headerName))  }
+        SECURE_LOG.info("Request med ${request.requestURI } ${response.status} $headers")
+
 
         val infoFraToken = hentInfoFraToken(request)
 
@@ -80,5 +85,7 @@ class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
 
     companion object {
         private val LOG = LoggerFactory.getLogger(MaskinportenTokenLoggingInterceptor::class.java)
+        private val SECURE_LOG = LoggerFactory.getLogger("secureLogger")
+
     }
 }
