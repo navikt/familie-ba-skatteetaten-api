@@ -16,7 +16,7 @@ import java.net.URI
 class BasakPersonerClient @Autowired constructor(
     @param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,
     @Qualifier("azure-longtimeout") restOperations: RestOperations
-) : AbstractRestClient(restOperations, "skatt.perioder") {
+) : AbstractRestClient(restOperations, "skatt.personer") {
 
     fun hentPersoner(aar: String): SkatteetatenPersonerResponse {
         val uri = URI.create("$sakServiceUri/skatt/personer?aar=$aar")
