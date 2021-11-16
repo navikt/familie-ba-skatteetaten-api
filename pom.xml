@@ -18,9 +18,9 @@
         <revision>1.0</revision>
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
-        <java.version>11</java.version>
-        <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.5.31</kotlin.version>
+        <java.version>17</java.version>
+        <jvmTarget>17</jvmTarget>
+        <kotlin.version>1.6.0</kotlin.version>
 	    <felles.version>1.20211008153542_d279663</felles.version>
         <kontrakter.version>2.0_20211101144412_b4fdda4</kontrakter.version>
         <familie.kontrakter.skatteetaten>2.0_20210920094114_9c74239</familie.kontrakter.skatteetaten>
