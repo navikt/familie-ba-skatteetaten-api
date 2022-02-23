@@ -22,7 +22,7 @@
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.6.10</kotlin.version>
 	    <felles.version>1.20220218080704_52586f3</felles.version>
-        <kontrakter.version>2.0_20220217093059_3870509</kontrakter.version>
+        <kontrakter.version>2.0_20220222213922_64795e8</kontrakter.version>
         <familie.kontrakter.skatteetaten>2.0_20210920094114_9c74239</familie.kontrakter.skatteetaten>
 
         <spring-cloud.version>3.1.1</spring-cloud.version>
