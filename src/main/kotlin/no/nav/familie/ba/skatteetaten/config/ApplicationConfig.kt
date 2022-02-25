@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.client.RestOperations
 import java.time.Duration
 import java.time.temporal.ChronoUnit
@@ -32,6 +33,7 @@ import java.time.temporal.ChronoUnit
 @Import(ConsumerIdClientInterceptor::class,
         InternLoggerInterceptor::class,
         BearerTokenClientInterceptor::class)
+@EnableScheduling
 class ApplicationConfig {
 
     @Bean
