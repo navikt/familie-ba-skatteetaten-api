@@ -60,6 +60,11 @@ spec:
   azure:
     application:
       enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: familie-ba-sak
+          cluster: prod-gcp
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod

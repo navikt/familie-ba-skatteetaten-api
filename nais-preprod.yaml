@@ -63,8 +63,9 @@ spec:
       enabled: true
   accessPolicy:
     outbound:
-      external:
-        - host: familie-ba-sak.dev-fss-pub.nais.io
+      rules:
+        - application: familie-ba-sak
+          cluster: dev-gcp
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod

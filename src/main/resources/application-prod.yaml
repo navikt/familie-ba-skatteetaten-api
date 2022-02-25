@@ -1,2 +1,2 @@
 BA_SAK_SCOPE: api://prod-gcp.teamfamilie.familie-ba-sak/.default
-BA_SAK_API_URL: http://familie-ba-sak/api
+BA_SAK_API_URL: https://familie-ba-sak.intern.nav.no/api
