@@ -18,13 +18,13 @@ class SkatteetatenPingService(val basakPerioderClient: BasakPerioderClient) {
 
     private val logger = LoggerFactory.getLogger(SkatteetatenPingService::class.java)
 
-    @Scheduled(fixedRate=60*60*1000)
+    @Scheduled(fixedRate=4*60*60*1000)
     fun finnPersonerMedUtvidetBarnetrygd() {
         try {
-            basakPerioderClient.hentPerioder(SkatteetatenPerioderRequest(Year.now().toString(), listOf("12345678901")))
-            logger.info("Ping mot basak OK")
+            basakPerioderClient.hentPerioder(SkatteetatenPerioderRequest(Year.now().toString(), emptyList()))
+            logger.info("PING mot familie-ba-sak OK")
         } catch (e: Exception) {
-           logger.error("Feil med oppkobling mot ba-sak", e)
+           logger.error("Feil med PING mot familie-ba-sak", e)
         }
     }
 }
