@@ -9,6 +9,9 @@ import com.nimbusds.jose.crypto.RSASSASigner
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
+import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPersonerResponse
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -16,7 +19,9 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.client.RestTemplate
+import java.io.File
 import java.time.Instant
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -38,10 +43,22 @@ fun main() {
 
     val entity: HttpEntity<*> = HttpEntity<Any?>(httpHeaders)
 
-    val response = restTemplate.exchange(
-        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021", HttpMethod.GET, entity, String::class.java
+    val responsePersoner = restTemplate.exchange(
+        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021", HttpMethod.GET, entity, SkatteetatenPersonerResponse::class.java
     )
-    println(response.body)
+
+    val første1000identer = responsePersoner.body?.brukere?.take(1000)?.map { it.ident }!!
+    println(objectMapper.writeValueAsString(første1000identer))
+
+
+    val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021", første1000identer), httpHeaders)
+    val responsePerioder = restTemplate.exchange(
+        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder", HttpMethod.POST, entityPerioder, SkatteetatenPerioderResponse::class.java
+    )
+    //println(responsePerioder.body)
+    val f = File.createTempFile("${LocalDateTime.now()}-skatt-perioder", ".tmp")
+    f.writeText(objectMapper.writeValueAsString(responsePerioder.body))
+    println("File created ${f.absolutePath}")
 }
 
 class MaskinportenClient {
