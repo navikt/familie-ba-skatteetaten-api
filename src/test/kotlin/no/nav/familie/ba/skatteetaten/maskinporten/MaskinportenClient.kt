@@ -44,22 +44,29 @@ fun main() {
     val entity: HttpEntity<*> = HttpEntity<Any?>(httpHeaders)
 
     val responsePersoner = restTemplate.exchange(
-        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021", HttpMethod.GET, entity, SkatteetatenPersonerResponse::class.java
+        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021",
+        HttpMethod.GET,
+        entity,
+        SkatteetatenPersonerResponse::class.java
     )
 
     val første1000identer = responsePersoner.body?.brukere?.take(1000)?.map { it.ident }!!
     println(objectMapper.writeValueAsString(første1000identer))
 
 
-    val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021", første1000identer), httpHeaders)
+    val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021",første1000identer), httpHeaders)
     val responsePerioder = restTemplate.exchange(
-        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder", HttpMethod.POST, entityPerioder, SkatteetatenPerioderResponse::class.java
-    )
-    //println(responsePerioder.body)
+            "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder",
+            HttpMethod.POST,
+            entityPerioder,
+            SkatteetatenPerioderResponse::class.java)
+
     val f = File.createTempFile("${LocalDateTime.now()}-skatt-perioder", ".tmp")
     f.writeText(objectMapper.writeValueAsString(responsePerioder.body))
     println("File created ${f.absolutePath}")
+
 }
+
 
 class MaskinportenClient {
 
@@ -103,7 +110,7 @@ class MaskinportenClient {
         requestBody.add("grant_type", GRANT_TYPE_VALUE)
         requestBody.add("assertion", signedJWT.serialize())
         val httpEntity = HttpEntity(requestBody, headers)
-        val json =  restTemplate.exchange(
+        val json = restTemplate.exchange(
             TOKEN_ENDPOINT,
             HttpMethod.POST,
             httpEntity,
