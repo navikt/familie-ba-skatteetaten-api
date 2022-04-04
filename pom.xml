@@ -20,7 +20,7 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.6.20</kotlin.version>
 	    <felles.version>1.20220329165814_c0860ec</felles.version>
         <kontrakter.version>2.0_20220331215756_9594442</kontrakter.version>
         <familie.kontrakter.skatteetaten>2.0_20210920094114_9c74239</familie.kontrakter.skatteetaten>
