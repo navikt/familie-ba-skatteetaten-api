@@ -21,11 +21,9 @@
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.6.21</kotlin.version>
-	    <felles.version>1.20220406145421_5f46d64</felles.version>
+	<felles.version>1.20220406145421_5f46d64</felles.version>
         <kontrakter.version>2.0_20220426142031_2f610f8</kontrakter.version>
         <familie.kontrakter.skatteetaten>2.0_20210920094114_9c74239</familie.kontrakter.skatteetaten>
-
-        <spring-cloud.version>3.1.1</spring-cloud.version>
         <token-validation-spring.version>2.0.15</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
     </properties>
@@ -63,11 +61,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-            <version>${spring-cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
