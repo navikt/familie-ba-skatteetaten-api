@@ -32,9 +32,13 @@ class SecurityHeaderFilter : HttpFilter() {
         return httpServletRequest.cookies?.firstOrNull { it -> "RUIDC" == it.name }!!
     }
 
-    override fun init(filterConfig: FilterConfig) {}
+    override fun init(filterConfig: FilterConfig) {
+        //NOP
+    }
 
-    override fun destroy() {}
+    override fun destroy() {
+        //NOP
+    }
 
     companion object
 
