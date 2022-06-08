@@ -77,7 +77,7 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
         val response = finnPersoner<String>(aar = 1000)
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
-        assertThat(response.body!!).contains("Ugyldig format, kan ikke være eldre enn 2011")
+        assertThat(response.body!!).contains("Ugyldig format, kan ikke være eldre enn 2020")
     }
 
     @Test

@@ -69,8 +69,8 @@ class ApplicationConfig {
         bearerTokenClientInterceptor: BearerTokenClientInterceptor
     ): RestOperations {
         return RestTemplateBuilder()
-            .setReadTimeout(Duration.of(10, ChronoUnit.MINUTES))
-            .setConnectTimeout(Duration.of(10, ChronoUnit.MINUTES))
+            .setReadTimeout(READ_CONNECTION_LONG_TIMEOUT)
+            .setConnectTimeout(READ_CONNECTION_LONG_TIMEOUT)
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientInterceptor,
@@ -96,5 +96,6 @@ class ApplicationConfig {
 
     companion object {
         private val log = LoggerFactory.getLogger(ApplicationConfig::class.java)
+        private val READ_CONNECTION_LONG_TIMEOUT = Duration.of(10, ChronoUnit.MINUTES)
     }
 }
