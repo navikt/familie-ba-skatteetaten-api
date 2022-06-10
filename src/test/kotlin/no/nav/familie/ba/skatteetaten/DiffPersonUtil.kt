@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import kotlin.io.path.Path
 
-
 /**
  * Sammenligner 2 uttrekk av personer-kallet.
  */
@@ -28,7 +27,6 @@ fun main() {
     println("Finnes i person-før, men ikke i etter: $diffFørEtter")
     println("Finnes i person-etter, men ikke i før: $diffEtterFør")
     println("Tid: ${stopWatch.totalTimeSeconds}s")
-
 }
 
 private fun lesFil(filnavn: String): String {

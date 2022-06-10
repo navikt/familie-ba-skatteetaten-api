@@ -24,7 +24,6 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
 
-
 fun main() {
     val jwkPrivate: String = System.getenv("MASKINPORTEN_CLIENT_JWK")
     assert(jwkPrivate.isNotBlank())
@@ -53,20 +52,18 @@ fun main() {
     val første1000identer = responsePersoner.body?.brukere?.take(1000)?.map { it.ident }!!
     println(objectMapper.writeValueAsString(første1000identer))
 
-
-    val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021",første1000identer), httpHeaders)
+    val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021", første1000identer), httpHeaders)
     val responsePerioder = restTemplate.exchange(
-            "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder",
-            HttpMethod.POST,
-            entityPerioder,
-            SkatteetatenPerioderResponse::class.java)
+        "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder",
+        HttpMethod.POST,
+        entityPerioder,
+        SkatteetatenPerioderResponse::class.java
+    )
 
     val f = File.createTempFile("${LocalDateTime.now()}-skatt-perioder", ".tmp")
     f.writeText(objectMapper.writeValueAsString(responsePerioder.body))
     println("File created ${f.absolutePath}")
-
 }
-
 
 class MaskinportenClient {
 
@@ -76,7 +73,6 @@ class MaskinportenClient {
     private val TOKEN_ENDPOINT = "$AUD/token"
 
     private val restTemplate = RestTemplate()
-
 
     private fun createSignedJWT(rsaJwk: RSAKey, claimsSet: JWTClaimsSet?): SignedJWT {
         return try {
@@ -91,7 +87,6 @@ class MaskinportenClient {
             throw RuntimeException(e)
         }
     }
-
 
     fun hentToken(scope: String, jwkPrivate: String, clientId: String): String {
         val rsaKey = RSAKey.parse(jwkPrivate)

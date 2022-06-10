@@ -13,7 +13,6 @@ import org.springframework.web.client.RestOperations
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
-
 @Configuration
 @Profile("integrationtest")
 class IntegrasjonConfig {
@@ -24,17 +23,17 @@ class IntegrasjonConfig {
     @Bean("azure-longtimeout")
     @Primary
     fun restTemplateJwtBearer(
-            consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-            internLoggerInterceptor: InternLoggerInterceptor,
-            bearerTokenClientInterceptor: BearerTokenClientInterceptor
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        internLoggerInterceptor: InternLoggerInterceptor,
+        bearerTokenClientInterceptor: BearerTokenClientInterceptor
     ): RestOperations {
         return RestTemplateBuilder()
-                .setReadTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
-                .setConnectTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
-                .additionalInterceptors(
-                        consumerIdClientInterceptor,
-                        bearerTokenClientInterceptor,
-                        MdcValuesPropagatingClientInterceptor()
-                ).build()
+            .setReadTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
+            .setConnectTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
+            .additionalInterceptors(
+                consumerIdClientInterceptor,
+                bearerTokenClientInterceptor,
+                MdcValuesPropagatingClientInterceptor()
+            ).build()
     }
 }

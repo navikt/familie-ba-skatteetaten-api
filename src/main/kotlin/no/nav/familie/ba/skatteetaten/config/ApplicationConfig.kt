@@ -30,9 +30,11 @@ import java.time.temporal.ChronoUnit
 @ComponentScan("no.nav.familie.ba")
 @EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
 @EnableOAuth2Client
-@Import(ConsumerIdClientInterceptor::class,
-        InternLoggerInterceptor::class,
-        BearerTokenClientInterceptor::class)
+@Import(
+    ConsumerIdClientInterceptor::class,
+    InternLoggerInterceptor::class,
+    BearerTokenClientInterceptor::class
+)
 @EnableScheduling
 class ApplicationConfig {
 
@@ -61,7 +63,6 @@ class ApplicationConfig {
         return filterRegistration
     }
 
-
     @Bean("azure-longtimeout")
     fun restTemplateJwtBearer(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
@@ -77,7 +78,6 @@ class ApplicationConfig {
                 MdcValuesPropagatingClientInterceptor()
             ).build()
     }
-
 
     /**
      * Overskrever OAuth2HttpClient som settes opp i token-support som ikke kan få med objectMapper fra felles

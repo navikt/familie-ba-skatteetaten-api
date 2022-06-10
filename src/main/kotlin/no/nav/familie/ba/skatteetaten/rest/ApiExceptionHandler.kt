@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.validation.ConstraintViolationException
 
-
 @ControllerAdvice
 class ApiExceptionHandler {
 
@@ -33,7 +32,7 @@ class ApiExceptionHandler {
         secureLogger.error("$className En feil har oppstått: ${mostSpecificThrowable.message}", throwable)
         logger.error("$className En feil har oppstått: ${mostSpecificThrowable.message}")
 
-        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "En feil har oppstått med callId ${callId}")
+        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "En feil har oppstått med callId $callId")
     }
 
     @ExceptionHandler(value = [HttpMessageConversionException::class, HttpMediaTypeNotSupportedException::class])
@@ -46,7 +45,7 @@ class ApiExceptionHandler {
 
         response.sendError(
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "En feil har oppstått med callId ${callId} message:${mostSpecificThrowable.message}"
+            "En feil har oppstått med callId $callId message:${mostSpecificThrowable.message}"
         )
     }
 
@@ -59,11 +58,11 @@ class ApiExceptionHandler {
         logger.error("Ugyldig eller mangler JWT token", ex)
         response.sendError(
             HttpStatus.UNAUTHORIZED.value(),
-            "$className Ugyldig eller mangler JWT token på ${callId}"
+            "$className Ugyldig eller mangler JWT token på $callId"
         )
     }
 
-    @ExceptionHandler(value = [MissingServletRequestParameterException::class,IllegalArgumentException::class, ConstraintViolationException::class, DateTimeException::class])
+    @ExceptionHandler(value = [MissingServletRequestParameterException::class, IllegalArgumentException::class, ConstraintViolationException::class, DateTimeException::class])
     fun onConstraintViolation(ex: Exception, response: HttpServletResponse) {
         logger.warn("Valideringsfeil av request. Se securelog for detaljer")
         secureLogger.warn("Valideringsfeil av request", ex)

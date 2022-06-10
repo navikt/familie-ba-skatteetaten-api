@@ -12,9 +12,8 @@ import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
 @Component
-class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
+class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
 
     private val consumerIdCounters = mutableMapOf<String, Counter>()
 
@@ -25,14 +24,15 @@ class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
         return super.preHandle(request, response, handler)
     }
 
-    override fun afterCompletion(request: HttpServletRequest,
-                            response: HttpServletResponse,
-                            handler: Any,
-                            ex: Exception?) {
+    override fun afterCompletion(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any,
+        ex: Exception?
+    ) {
 
-        val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0,15)) else Pair(headerName, request.getHeader(headerName))  }
+        val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0, 15)) else Pair(headerName, request.getHeader(headerName)) }
         SECURE_LOG.info("Request med ${request.requestURI } ${response.status} $headers")
-
 
         val infoFraToken = hentInfoFraToken(request)
 
@@ -68,7 +68,7 @@ class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
     private fun hentConsumerId(request: HttpServletRequest): String {
         val jwtClaims = hentClaims(request)
 
-        return  if ((jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID") == null) "MANGLER" else (jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID").toString()
+        return if ((jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID") == null) "MANGLER" else (jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID").toString()
     }
 
     private fun hentClaims(request: HttpServletRequest): JwtTokenClaims? {
@@ -86,6 +86,5 @@ class MaskinportenTokenLoggingInterceptor: AsyncHandlerInterceptor {
     companion object {
         private val LOG = LoggerFactory.getLogger(MaskinportenTokenLoggingInterceptor::class.java)
         private val SECURE_LOG = LoggerFactory.getLogger("secureLogger")
-
     }
 }
