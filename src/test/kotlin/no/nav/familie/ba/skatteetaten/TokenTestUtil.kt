@@ -14,15 +14,18 @@ object TokenTestUtil {
         }
 
         return mockOAuth2Server.issueToken(
-                issuerId = maskinportenWellKnownUrl,
-                subject = thisId,
-                claims = claims
+            issuerId = maskinportenWellKnownUrl,
+            subject = thisId,
+            claims = claims
         ).serialize()
     }
 
-    data class MaskinportenToken(val scope: String = "nav:familie/v1/barnetrygd/utvidet",
-                                 val issuer: String = "maskinporten",
-                                 val consumer: Map<String, String>? = mapOf("authority" to "iso6523-actorid-upis",
-                                                                            "ID" to "ID123"))
-
+    data class MaskinportenToken(
+        val scope: String = "nav:familie/v1/barnetrygd/utvidet",
+        val issuer: String = "maskinporten",
+        val consumer: Map<String, String>? = mapOf(
+            "authority" to "iso6523-actorid-upis",
+            "ID" to "ID123"
+        )
+    )
 }

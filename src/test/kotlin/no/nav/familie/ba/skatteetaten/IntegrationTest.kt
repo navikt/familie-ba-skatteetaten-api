@@ -18,9 +18,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [DevLauncher::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("integrationtest",
-                "mock-oauth",
-                "mock-ba-sak")
+@ActiveProfiles(
+    "integrationtest",
+    "mock-oauth",
+    "mock-ba-sak"
+)
 @EnableMockOAuth2Server
 class IntegrationTest {
 
@@ -52,5 +54,4 @@ class IntegrationTest {
     protected fun withClientToken(clientToken: MaskinportenToken = MaskinportenToken()) {
         headers.setBearerAuth(TokenTestUtil.clientToken(mockOAuth2Server, clientToken, maskinportenWellKnownUrl))
     }
-
 }

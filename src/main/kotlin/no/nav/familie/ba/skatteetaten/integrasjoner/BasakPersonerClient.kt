@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 import java.net.URI
 
-
 @Component
 class BasakPersonerClient @Autowired constructor(
     @param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,

@@ -1,6 +1,5 @@
 package no.nav.familie.ba.skatteetaten.service
 
-
 import no.nav.familie.ba.skatteetaten.integrasjoner.BasakPerioderClient
 import no.nav.familie.ba.skatteetaten.integrasjoner.BasakPersonerClient
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest

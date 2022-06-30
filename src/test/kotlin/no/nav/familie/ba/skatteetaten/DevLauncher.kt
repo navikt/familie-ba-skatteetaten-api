@@ -4,10 +4,8 @@ import no.nav.familie.ba.skatteetaten.config.ApplicationConfig
 import org.springframework.boot.SpringApplication
 import org.springframework.context.annotation.Import
 
-
 @Import(ApplicationConfig::class)
 class DevLauncher
-
 
 fun main(args: Array<String>) {
     System.setProperty("spring.profiles.active", "dev")

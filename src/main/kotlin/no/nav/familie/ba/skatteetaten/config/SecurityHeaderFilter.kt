@@ -1,6 +1,5 @@
 package no.nav.familie.ba.skatteetaten.config
 
-import no.nav.familie.log.filter.LogFilter
 import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.FilterConfig
@@ -33,13 +32,12 @@ class SecurityHeaderFilter : HttpFilter() {
     }
 
     override fun init(filterConfig: FilterConfig) {
-        //NOP
+        // NOP
     }
 
     override fun destroy() {
-        //NOP
+        // NOP
     }
 
     companion object
-
 }

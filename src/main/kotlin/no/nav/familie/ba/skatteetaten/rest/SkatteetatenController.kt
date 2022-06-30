@@ -1,6 +1,5 @@
 package no.nav.familie.ba.skatteetaten.rest
 
-
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
@@ -22,14 +21,12 @@ import javax.validation.Valid
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
-
 @RestController
 @Validated
 @RequestMapping("/api/v1")
 @ProtectedWithClaims(issuer = "maskinporten", claimMap = ["scope=nav:familie/v1/barnetrygd/utvidet"])
 class SkatteetatenController(@Autowired(required = true) val service: SkatteetatenService) {
     private val logger = LoggerFactory.getLogger(SkatteetatenController::class.java)
-
 
     @GetMapping(
         value = ["/personer"],
@@ -38,12 +35,11 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
     fun finnPersonerMedUtvidetBarnetrygd(
         @Min(value = 2020, message = "Ugyldig format, kan ikke være eldre enn 2020")
         @Max(value = 2050, message = "Ugyldig format, kan ikke spørre om år etter 2050")
-        @RequestParam( value = "aar", required = true) aar: Int
+        @RequestParam(value = "aar", required = true) aar: Int
     ): ResponseEntity<SkatteetatenPersonerResponse> {
         logger.info("Henter skatteetaten-personer for år=$aar")
         return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
     }
-
 
     @PostMapping(
         value = ["/perioder"],
@@ -54,17 +50,16 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
         @Valid @RequestBody perioderRequest: SkatteetatenPerioderRequest
     ): ResponseEntity<SkatteetatenPerioderResponse> {
 
-       erSkatteetatenPeriodeRequestGyldig(perioderRequest)
+        erSkatteetatenPeriodeRequestGyldig(perioderRequest)
         logger.info("Henter skatteetaten-perioder for år=${perioderRequest.aar}")
 
-       return ResponseEntity(
-                service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
-                HttpStatus.OK
-            )
-
+        return ResponseEntity(
+            service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
+            HttpStatus.OK
+        )
     }
 
-    fun erSkatteetatenPeriodeRequestGyldig(perioderRequest: SkatteetatenPerioderRequest){
+    fun erSkatteetatenPeriodeRequestGyldig(perioderRequest: SkatteetatenPerioderRequest) {
         Year.of(perioderRequest.aar.toInt())
         if (perioderRequest.identer.size > MAX_ANTALL_I_PERIODER)
             throw IllegalArgumentException("Maks antall identer er 10000")
