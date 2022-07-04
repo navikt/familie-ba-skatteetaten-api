@@ -21,8 +21,8 @@
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.7.10</kotlin.version>
-	<felles.version>1.20220610091149_ae616c5</felles.version>
         <kontrakter.version>2.0_20220712141639_0440c10</kontrakter.version>
+	<felles.version>1.20220701144106_918df22</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20220609214258_f30c3ce</familie.kontrakter.skatteetaten>
         <token-validation-spring.version>2.1.2</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
