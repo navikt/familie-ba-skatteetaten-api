@@ -35,7 +35,8 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
     fun finnPersonerMedUtvidetBarnetrygd(
         @Min(value = 2020, message = "Ugyldig format, kan ikke være eldre enn 2020")
         @Max(value = 2050, message = "Ugyldig format, kan ikke spørre om år etter 2050")
-        @RequestParam(value = "aar", required = true) aar: Int
+        @RequestParam(value = "aar", required = true)
+        aar: Int
     ): ResponseEntity<SkatteetatenPersonerResponse> {
         logger.info("Henter skatteetaten-personer for år=$aar")
         return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
@@ -47,9 +48,9 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
         consumes = ["application/json"]
     )
     fun hentPerioderMedUtvidetBarnetrygd(
-        @Valid @RequestBody perioderRequest: SkatteetatenPerioderRequest
+        @Valid @RequestBody
+        perioderRequest: SkatteetatenPerioderRequest
     ): ResponseEntity<SkatteetatenPerioderResponse> {
-
         erSkatteetatenPeriodeRequestGyldig(perioderRequest)
         logger.info("Henter skatteetaten-perioder for år=${perioderRequest.aar}")
 
@@ -61,8 +62,9 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
 
     fun erSkatteetatenPeriodeRequestGyldig(perioderRequest: SkatteetatenPerioderRequest) {
         Year.of(perioderRequest.aar.toInt())
-        if (perioderRequest.identer.size > MAX_ANTALL_I_PERIODER)
+        if (perioderRequest.identer.size > MAX_ANTALL_I_PERIODER) {
             throw IllegalArgumentException("Maks antall identer er 10000")
+        }
         for (personident: String in perioderRequest.identer) {
             require("""\d{11}""".toRegex().matches(personident)) { "Ikke et gyldig fødselsnummer: $personident" }
         }
