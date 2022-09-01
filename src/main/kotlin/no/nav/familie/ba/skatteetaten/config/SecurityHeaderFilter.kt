@@ -17,7 +17,6 @@ class SecurityHeaderFilter : HttpFilter() {
         httpServletResponse: HttpServletResponse,
         filterChain: FilterChain
     ) {
-
         httpServletResponse.setHeader("Cache-Control", "must-revalidate,no-cache,no-store")
         httpServletResponse.setHeader("X-Content-Type-Options", "nosniff")
         if (httpServletResponse.getHeader("Set-Cookie") != null) {

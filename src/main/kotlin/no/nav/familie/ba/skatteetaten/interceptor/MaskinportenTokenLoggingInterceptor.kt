@@ -30,7 +30,6 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
         handler: Any,
         ex: Exception?
     ) {
-
         val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0, 15)) else Pair(headerName, request.getHeader(headerName)) }
         SECURE_LOG.info("Request med ${request.requestURI } ${response.status} $headers")
 
@@ -73,8 +72,11 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
 
     private fun hentClaims(request: HttpServletRequest): JwtTokenClaims? {
         val authorizationHeader = request.getHeader("Authorization")
-        val token = if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
-            authorizationHeader.substring(7) else null
+        val token = if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            authorizationHeader.substring(7)
+        } else {
+            null
+        }
 
         if (token == null) {
             return null
