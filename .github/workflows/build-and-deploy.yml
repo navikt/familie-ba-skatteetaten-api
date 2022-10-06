@@ -49,16 +49,19 @@ jobs:
         if: ${{ failure() }}
         uses: scacap/action-surefire-report@v1.0.13
       - name: Login to GitHub Container Registry
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
+        if: github.triggering_actor != 'dependabot[bot]'
         run: |
           docker build -t $IMAGE .
           docker push $IMAGE
       - name: Deploy til dev-gcp
+        if: github.triggering_actor != 'dependabot[bot]'
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
