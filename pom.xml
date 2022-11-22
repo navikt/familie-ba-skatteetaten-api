@@ -21,7 +21,7 @@
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.7.21</kotlin.version>
-        <kontrakter.version>2.0_20221114152515_c93fbad</kontrakter.version>
+        <kontrakter.version>2.0_20221121103857_87ffed0</kontrakter.version>
 	<felles.version>1.20221101085322_cc4d556</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20220609214258_f30c3ce</familie.kontrakter.skatteetaten>
         <token-validation-spring.version>2.1.6</token-validation-spring.version>
