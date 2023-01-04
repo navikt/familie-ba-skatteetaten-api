@@ -20,8 +20,8 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.7.22</kotlin.version>
-        <kontrakter.version>2.0_20221216093604_cfeaf82</kontrakter.version>
+        <kotlin.version>1.8.0</kotlin.version>
+        <kontrakter.version>2.0_20221229093739_c660777</kontrakter.version>
 	<felles.version>1.20221202080911_bcf8f33</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20220609214258_f30c3ce</familie.kontrakter.skatteetaten>
         <token-validation-spring.version>2.1.9</token-validation-spring.version>
