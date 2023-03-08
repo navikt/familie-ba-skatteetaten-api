@@ -36,8 +36,7 @@ spec:
       memory: 1024Mi
       cpu: 200m
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ba-skatteetaten-api.dev.intern.nav.no
-    - https://familie-ba-skatteetaten-api.dev.nav.no
+    - https://familie-ba-skatteetaten-api.intern.dev.nav.no
     - https://familie-ba-skatteetaten-api.ekstern.dev.nav.no
   secureLogs:
     enabled: true
