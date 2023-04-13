@@ -1,8 +1,9 @@
 name: Build-Deploy-Prod
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
+    types: [ closed ]
 env:
   IMAGE: ghcr.io/navikt/familie-ba-skatteetaten-api:${{ github.sha }}
   IMAGE_LATEST: ghcr.io/navikt/familie-ba-skatteetaten-api:latest
