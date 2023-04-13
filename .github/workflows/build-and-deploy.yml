@@ -32,6 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      pull-requests: write
+      contents: write
     steps:
       - uses: actions/checkout@v3.3.0
       - uses: actions/setup-java@v3
@@ -67,3 +69,22 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-preprod.yaml
+      - name: Dependabot metadata
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Approve a PR
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{ github.actor == 'dependabot[bot]' && (steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor') }}
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
