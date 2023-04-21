@@ -1,5 +1,8 @@
 package no.nav.familie.ba.skatteetaten.rest
 
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
@@ -17,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.Year
-import javax.validation.Valid
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
 
 @RestController
 @Validated
