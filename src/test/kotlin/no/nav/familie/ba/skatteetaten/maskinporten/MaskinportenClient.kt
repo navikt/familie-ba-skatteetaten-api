@@ -69,7 +69,7 @@ class MaskinportenClient {
 
     private val SCOPE = "scope"
     private val GRANT_TYPE_VALUE = "urn:ietf:params:oauth:grant-type:jwt-bearer"
-    private val AUD = "https://ver2.maskinporten.no/"
+    private val AUD = "https://test.maskinporten.no/"
     private val TOKEN_ENDPOINT = "$AUD/token"
 
     private val restTemplate = RestTemplate()
