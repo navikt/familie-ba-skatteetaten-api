@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.0.6</version>
     </parent>
 
     <properties>
@@ -21,10 +21,10 @@
         <java.version>17</java.version>
         <jvmTarget>17</jvmTarget>
         <kotlin.version>1.8.20</kotlin.version>
-        <kontrakter.version>2.0_20230412145328_311e72c</kontrakter.version>
-	<felles.version>1.20230116145510_2afcc20</felles.version>
+        <kontrakter.version>3.0_20230404163639_edb8619-JAKARTA</kontrakter.version>
+	    <felles.version>2.20230210162649_a258d57-SPRING_BOOT_3</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20230214104704_706e9c0</familie.kontrakter.skatteetaten>
-        <token-validation-spring.version>2.1.9</token-validation-spring.version>
+        <token-validation-spring.version>3.0.10</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
     </properties>
 
@@ -86,7 +86,7 @@
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>token-client-spring</artifactId>
+            <artifactId>token-validation-spring-test</artifactId>
             <version>${token-validation-spring.version}</version>
         </dependency>
         <dependency>
@@ -101,10 +101,10 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://github.com/spring-projects/spring-boot/issues/33044#issuecomment-1379812611 -->
         <dependency>
-            <groupId>org.springframework.vault</groupId>
-            <artifactId>spring-vault-core</artifactId>
-            <version>2.3.3</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
         </dependency>
 
         <!-- NAV-interne avhengigheter -->

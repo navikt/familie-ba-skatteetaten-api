@@ -2,6 +2,8 @@ package no.nav.familie.ba.skatteetaten.interceptor
 
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.Metrics
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import no.nav.security.token.support.core.jwt.JwtToken
 import no.nav.security.token.support.core.jwt.JwtTokenClaims
 import org.slf4j.LoggerFactory
@@ -9,8 +11,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.AsyncHandlerInterceptor
 import java.util.*
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Component
 class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
