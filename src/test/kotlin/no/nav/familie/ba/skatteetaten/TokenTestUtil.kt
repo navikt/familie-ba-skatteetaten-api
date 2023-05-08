@@ -16,7 +16,7 @@ object TokenTestUtil {
         return mockOAuth2Server.issueToken(
             issuerId = maskinportenWellKnownUrl,
             subject = thisId,
-            claims = claims
+            claims = claims,
         ).serialize()
     }
 
@@ -25,7 +25,7 @@ object TokenTestUtil {
         val issuer: String = "maskinporten",
         val consumer: Map<String, String>? = mapOf(
             "authority" to "iso6523-actorid-upis",
-            "ID" to "ID123"
-        )
+            "ID" to "ID123",
+        ),
     )
 }

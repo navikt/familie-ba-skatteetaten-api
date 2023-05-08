@@ -13,11 +13,11 @@ import kotlin.io.path.Path
 fun main() {
     val personer = objectMapper.readValue(
         Path("./person-før.json").toFile(),
-        SkatteetatenPersonerResponse::class.java
+        SkatteetatenPersonerResponse::class.java,
     ).brukere.map { it.ident }.sorted()
     val personerEtter = objectMapper.readValue(
         Path("./person-etter.json").toFile(),
-        SkatteetatenPersonerResponse::class.java
+        SkatteetatenPersonerResponse::class.java,
     ).brukere.map { it.ident }.sorted()
     val stopWatch = StopWatch()
     stopWatch.start()
@@ -32,6 +32,6 @@ fun main() {
 private fun lesFil(filnavn: String): String {
     return Files.readString(
         Path(filnavn),
-        StandardCharsets.UTF_8
+        StandardCharsets.UTF_8,
     )
 }

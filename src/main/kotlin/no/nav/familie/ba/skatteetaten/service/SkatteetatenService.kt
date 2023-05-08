@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 class SkatteetatenService(val basakPersonerClient: BasakPersonerClient, val basakPerioderClient: BasakPerioderClient) {
 
     fun hentPerioderMedUtvidetBarnetrygd(
-        perioderRequest: SkatteetatenPerioderRequest
+        perioderRequest: SkatteetatenPerioderRequest,
     ): SkatteetatenPerioderResponse {
         return basakPerioderClient.hentPerioder(perioderRequest)
     }

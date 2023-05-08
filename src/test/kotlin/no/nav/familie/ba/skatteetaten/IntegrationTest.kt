@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ActiveProfiles(
     "integrationtest",
     "mock-oauth",
-    "mock-ba-sak"
+    "mock-ba-sak",
 )
 @EnableMockOAuth2Server
 class IntegrationTest {

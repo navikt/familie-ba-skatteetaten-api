@@ -28,7 +28,7 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
         request: HttpServletRequest,
         response: HttpServletResponse,
         handler: Any,
-        ex: Exception?
+        ex: Exception?,
     ) {
         val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0, 15)) else Pair(headerName, request.getHeader(headerName)) }
         SECURE_LOG.info("Request med ${request.requestURI } ${response.status} $headers")

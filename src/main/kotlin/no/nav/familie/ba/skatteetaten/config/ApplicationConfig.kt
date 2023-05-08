@@ -33,7 +33,7 @@ import java.time.temporal.ChronoUnit
 @Import(
     ConsumerIdClientInterceptor::class,
     InternLoggerInterceptor::class,
-    BearerTokenClientInterceptor::class
+    BearerTokenClientInterceptor::class,
 )
 @EnableScheduling
 class ApplicationConfig {
@@ -67,7 +67,7 @@ class ApplicationConfig {
     fun restTemplateJwtBearer(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         internLoggerInterceptor: InternLoggerInterceptor,
-        bearerTokenClientInterceptor: BearerTokenClientInterceptor
+        bearerTokenClientInterceptor: BearerTokenClientInterceptor,
     ): RestOperations {
         return RestTemplateBuilder()
             .setReadTimeout(READ_CONNECTION_LONG_TIMEOUT)
@@ -75,7 +75,7 @@ class ApplicationConfig {
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientInterceptor,
-                MdcValuesPropagatingClientInterceptor()
+                MdcValuesPropagatingClientInterceptor(),
             ).build()
     }
 
@@ -90,7 +90,7 @@ class ApplicationConfig {
         return DefaultOAuth2HttpClient(
             RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)),
         )
     }
 

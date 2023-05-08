@@ -15,7 +15,7 @@ class SecurityHeaderFilter : HttpFilter() {
     override fun doFilter(
         httpServletRequest: HttpServletRequest,
         httpServletResponse: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         httpServletResponse.setHeader("Cache-Control", "must-revalidate,no-cache,no-store")
         httpServletResponse.setHeader("X-Content-Type-Options", "nosniff")
