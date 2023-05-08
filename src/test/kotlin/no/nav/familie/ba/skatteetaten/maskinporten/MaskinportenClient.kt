@@ -46,7 +46,7 @@ fun main() {
         "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/personer?aar=2021",
         HttpMethod.GET,
         entity,
-        SkatteetatenPersonerResponse::class.java
+        SkatteetatenPersonerResponse::class.java,
     )
 
     val første1000identer = responsePersoner.body?.brukere?.take(1000)?.map { it.ident }!!
@@ -57,7 +57,7 @@ fun main() {
         "https://familie-ba-skatteetaten-api.ekstern.dev.nav.no/api/v1/perioder",
         HttpMethod.POST,
         entityPerioder,
-        SkatteetatenPerioderResponse::class.java
+        SkatteetatenPerioderResponse::class.java,
     )
 
     val f = File.createTempFile("${LocalDateTime.now()}-skatt-perioder", ".tmp")
@@ -109,7 +109,7 @@ class MaskinportenClient {
             TOKEN_ENDPOINT,
             HttpMethod.POST,
             httpEntity,
-            String::class.java
+            String::class.java,
         ).body!!
 
         return json

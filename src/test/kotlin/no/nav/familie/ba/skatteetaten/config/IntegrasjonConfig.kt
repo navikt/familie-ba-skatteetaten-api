@@ -25,7 +25,7 @@ class IntegrasjonConfig {
     fun restTemplateJwtBearer(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         internLoggerInterceptor: InternLoggerInterceptor,
-        bearerTokenClientInterceptor: BearerTokenClientInterceptor
+        bearerTokenClientInterceptor: BearerTokenClientInterceptor,
     ): RestOperations {
         return RestTemplateBuilder()
             .setReadTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
@@ -33,7 +33,7 @@ class IntegrasjonConfig {
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientInterceptor,
-                MdcValuesPropagatingClientInterceptor()
+                MdcValuesPropagatingClientInterceptor(),
             ).build()
     }
 }

@@ -45,7 +45,7 @@ class ApiExceptionHandler {
 
         response.sendError(
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "En feil har oppstått med callId $callId message:${mostSpecificThrowable.message}"
+            "En feil har oppstått med callId $callId message:${mostSpecificThrowable.message}",
         )
     }
 
@@ -58,7 +58,7 @@ class ApiExceptionHandler {
         logger.error("Ugyldig eller mangler JWT token", ex)
         response.sendError(
             HttpStatus.UNAUTHORIZED.value(),
-            "$className Ugyldig eller mangler JWT token på $callId"
+            "$className Ugyldig eller mangler JWT token på $callId",
         )
     }
 

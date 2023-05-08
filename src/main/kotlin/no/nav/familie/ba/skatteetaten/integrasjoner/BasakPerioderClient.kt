@@ -18,7 +18,7 @@ private val logger = LoggerFactory.getLogger(BasakPerioderClient::class.java)
 @Component
 class BasakPerioderClient @Autowired constructor(
     @param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,
-    @Qualifier("azure-longtimeout") restOperations: RestOperations
+    @Qualifier("azure-longtimeout") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "skatt.perioder") {
 
     fun hentPerioder(request: SkatteetatenPerioderRequest): SkatteetatenPerioderResponse {

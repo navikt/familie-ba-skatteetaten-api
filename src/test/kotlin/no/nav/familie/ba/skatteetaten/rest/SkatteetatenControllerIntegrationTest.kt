@@ -137,7 +137,7 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     private fun defaultSkatteetatenPersonerResponse(): SkatteetatenPersonerResponse {
         val person = SkatteetatenPerson(
             ident = "2",
-            sisteVedtakPaaIdent = LocalDateTime.now()
+            sisteVedtakPaaIdent = LocalDateTime.now(),
         )
         return SkatteetatenPersonerResponse(listOf(person))
     }
@@ -146,12 +146,12 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
         val periode = SkatteetatenPeriode(
             fraMaaned = "2021-01-01",
             tomMaaned = "2021-01-01",
-            delingsprosent = SkatteetatenPeriode.Delingsprosent._50
+            delingsprosent = SkatteetatenPeriode.Delingsprosent._50,
         )
         val perioder = SkatteetatenPerioder(
             ident = "0",
             sisteVedtakPaaIdent = LocalDateTime.now(),
-            perioder = listOf(periode)
+            perioder = listOf(periode),
         )
         return SkatteetatenPerioderResponse(listOf(perioder))
     }
@@ -161,18 +161,18 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
         return restTemplate.exchange(
             localhost("/api/v1/personer?$aarQueryParam"),
             HttpMethod.GET,
-            HttpEntity(null, headers)
+            HttpEntity(null, headers),
         )
     }
 
     private inline fun <reified T : Any> hentPerioder(
         ident: String = IDENT,
-        aar: Int = ÅR
+        aar: Int = ÅR,
     ): ResponseEntity<T> {
         return restTemplate.exchange(
             localhost("/api/v1/perioder"),
             HttpMethod.POST,
-            HttpEntity(SkatteetatenPerioderRequest(aar.toString(), listOf(ident)), headers)
+            HttpEntity(SkatteetatenPerioderRequest(aar.toString(), listOf(ident)), headers),
         )
     }
 

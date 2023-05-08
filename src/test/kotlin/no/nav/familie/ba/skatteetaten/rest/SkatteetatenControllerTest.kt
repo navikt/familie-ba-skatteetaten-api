@@ -14,11 +14,11 @@ class SkatteetatenControllerTest {
 
         val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
             aar = "2020",
-            identer = listOf("12345678910", "123")
+            identer = listOf("12345678910", "123"),
         )
 
         val error = assertThrows(
-            IllegalArgumentException::class.java
+            IllegalArgumentException::class.java,
         ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
 
         assertEquals(error.message, "Ikke et gyldig fødselsnummer: 123")
@@ -30,7 +30,7 @@ class SkatteetatenControllerTest {
 
         val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
             aar = "2020",
-            identer = listOf("27903249671")
+            identer = listOf("27903249671"),
         )
 
         skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest)
@@ -42,11 +42,11 @@ class SkatteetatenControllerTest {
 
         val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
             aar = "sdsdf",
-            identer = listOf("27903249671")
+            identer = listOf("27903249671"),
         )
 
         val error = assertThrows(
-            IllegalArgumentException::class.java
+            IllegalArgumentException::class.java,
         ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
         assertEquals(error.message, "For input string: \"sdsdf\"")
     }
@@ -61,19 +61,19 @@ class SkatteetatenControllerTest {
         skatteetatenController.erSkatteetatenPeriodeRequestGyldig(
             SkatteetatenPerioderRequest(
                 aar = "2020",
-                identer = identer
-            )
+                identer = identer,
+            ),
         )
 
         identer.add("12345678901")
         val error = assertThrows(
-            IllegalArgumentException::class.java
+            IllegalArgumentException::class.java,
         ) {
             skatteetatenController.erSkatteetatenPeriodeRequestGyldig(
                 SkatteetatenPerioderRequest(
                     aar = "2020",
-                    identer = identer
-                )
+                    identer = identer,
+                ),
             )
         }
         assertEquals(error.message, "Maks antall identer er 10000")

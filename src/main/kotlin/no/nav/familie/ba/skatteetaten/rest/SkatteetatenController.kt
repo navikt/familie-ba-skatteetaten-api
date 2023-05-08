@@ -30,13 +30,13 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
 
     @GetMapping(
         value = ["/personer"],
-        produces = ["application/json;charset=UTF-8"]
+        produces = ["application/json;charset=UTF-8"],
     )
     fun finnPersonerMedUtvidetBarnetrygd(
         @Min(value = 2020, message = "Ugyldig format, kan ikke være eldre enn 2020")
         @Max(value = 2050, message = "Ugyldig format, kan ikke spørre om år etter 2050")
         @RequestParam(value = "aar", required = true)
-        aar: Int
+        aar: Int,
     ): ResponseEntity<SkatteetatenPersonerResponse> {
         logger.info("Henter skatteetaten-personer for år=$aar")
         return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
@@ -45,18 +45,18 @@ class SkatteetatenController(@Autowired(required = true) val service: Skatteetat
     @PostMapping(
         value = ["/perioder"],
         produces = ["application/json;charset=UTF-8"],
-        consumes = ["application/json"]
+        consumes = ["application/json"],
     )
     fun hentPerioderMedUtvidetBarnetrygd(
         @Valid @RequestBody
-        perioderRequest: SkatteetatenPerioderRequest
+        perioderRequest: SkatteetatenPerioderRequest,
     ): ResponseEntity<SkatteetatenPerioderResponse> {
         erSkatteetatenPeriodeRequestGyldig(perioderRequest)
         logger.info("Henter skatteetaten-perioder for år=${perioderRequest.aar}")
 
         return ResponseEntity(
             service.hentPerioderMedUtvidetBarnetrygd(perioderRequest),
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 
