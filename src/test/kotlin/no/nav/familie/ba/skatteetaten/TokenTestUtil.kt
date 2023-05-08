@@ -26,6 +26,6 @@ object TokenTestUtil {
         val consumer: Map<String, String>? = mapOf(
             "authority" to "iso6523-actorid-upis",
             "ID" to "ID123",
-            ),
+        ),
     )
 }
