@@ -24,7 +24,7 @@
         <kontrakter.version>3.0_20230404163639_edb8619-JAKARTA</kontrakter.version>
 	    <felles.version>2.20230210162649_a258d57-SPRING_BOOT_3</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20230214104704_706e9c0</familie.kontrakter.skatteetaten>
-        <token-validation-spring.version>3.1.0</token-validation-spring.version>
+        <token-validation-spring.version>3.1.1</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
     </properties>
 
