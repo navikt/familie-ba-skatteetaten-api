@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
     </parent>
 
     <properties>
@@ -20,7 +20,7 @@
         <changelist>-SNAPSHOT</changelist>
         <java.version>21</java.version>
         <jvmTarget>21</jvmTarget>
-        <kotlin.version>1.9.21</kotlin.version>
+        <kotlin.version>1.9.22</kotlin.version>
         <kontrakter.version>3.0_20230404163639_edb8619-JAKARTA</kontrakter.version>
 	    <felles.version>2.20231201131108_ea25dd3</felles.version>
         <familie.kontrakter.skatteetaten>2.0_20230214104704_706e9c0</familie.kontrakter.skatteetaten>
