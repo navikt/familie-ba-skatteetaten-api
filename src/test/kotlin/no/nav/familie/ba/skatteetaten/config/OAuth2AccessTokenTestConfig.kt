@@ -12,12 +12,11 @@ import org.springframework.context.annotation.Profile
 @Profile("mock-oauth")
 @Configuration
 class OAuth2AccessTokenTestConfig {
-
     @Bean
     @Primary
     fun oAuth2AccessTokenServiceMock(): OAuth2AccessTokenService {
         val tokenMockService = mockk<OAuth2AccessTokenService>()
-        val response = OAuth2AccessTokenResponse("Mock-token-response", 60, 60, null)
+        val response = OAuth2AccessTokenResponse("Mock-token-response", 60, 60, emptyMap())
         every { tokenMockService.getAccessToken(any()) } returns response
         return tokenMockService
     }
