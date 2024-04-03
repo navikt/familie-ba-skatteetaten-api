@@ -11,7 +11,6 @@ import java.time.Year
 @Service
 @Profile("prod|preprod")
 class SkatteetatenPingService(val basakPerioderClient: BasakPerioderClient) {
-
     private val logger = LoggerFactory.getLogger(SkatteetatenPingService::class.java)
 
     @Scheduled(fixedRate = 4 * 60 * 60 * 1000)

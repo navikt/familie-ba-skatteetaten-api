@@ -25,7 +25,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 )
 @EnableMockOAuth2Server
 class IntegrationTest {
-
     @Autowired
     private lateinit var mockOAuth2Server: MockOAuth2Server
 

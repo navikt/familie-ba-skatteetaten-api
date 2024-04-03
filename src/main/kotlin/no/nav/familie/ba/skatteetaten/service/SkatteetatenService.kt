@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class SkatteetatenService(val basakPersonerClient: BasakPersonerClient, val basakPerioderClient: BasakPerioderClient) {
-
-    fun hentPerioderMedUtvidetBarnetrygd(
-        perioderRequest: SkatteetatenPerioderRequest,
-    ): SkatteetatenPerioderResponse {
+    fun hentPerioderMedUtvidetBarnetrygd(perioderRequest: SkatteetatenPerioderRequest): SkatteetatenPerioderResponse {
         return basakPerioderClient.hentPerioder(perioderRequest)
     }
 

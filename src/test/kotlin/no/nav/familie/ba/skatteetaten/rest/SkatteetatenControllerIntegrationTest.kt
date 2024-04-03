@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity
 import java.time.LocalDateTime
 
 internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
-
     @BeforeEach
     internal fun setUp() {
         withClientToken()
@@ -128,31 +127,35 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     }
 
     private fun enqueJson(body: String) {
-        val response = MockResponse()
-            .addHeader("Content-Type", "application/json")
-            .setBody(body)
+        val response =
+            MockResponse()
+                .addHeader("Content-Type", "application/json")
+                .setBody(body)
         baSakMiremock.enqueue(response)
     }
 
     private fun defaultSkatteetatenPersonerResponse(): SkatteetatenPersonerResponse {
-        val person = SkatteetatenPerson(
-            ident = "2",
-            sisteVedtakPaaIdent = LocalDateTime.now(),
-        )
+        val person =
+            SkatteetatenPerson(
+                ident = "2",
+                sisteVedtakPaaIdent = LocalDateTime.now(),
+            )
         return SkatteetatenPersonerResponse(listOf(person))
     }
 
     private fun defaultSkatteetatenPerioderResponse(): SkatteetatenPerioderResponse {
-        val periode = SkatteetatenPeriode(
-            fraMaaned = "2021-01-01",
-            tomMaaned = "2021-01-01",
-            delingsprosent = SkatteetatenPeriode.Delingsprosent._50,
-        )
-        val perioder = SkatteetatenPerioder(
-            ident = "0",
-            sisteVedtakPaaIdent = LocalDateTime.now(),
-            perioder = listOf(periode),
-        )
+        val periode =
+            SkatteetatenPeriode(
+                fraMaaned = "2021-01-01",
+                tomMaaned = "2021-01-01",
+                delingsprosent = SkatteetatenPeriode.Delingsprosent._50,
+            )
+        val perioder =
+            SkatteetatenPerioder(
+                ident = "0",
+                sisteVedtakPaaIdent = LocalDateTime.now(),
+                perioder = listOf(periode),
+            )
         return SkatteetatenPerioderResponse(listOf(perioder))
     }
 
@@ -177,7 +180,6 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     }
 
     companion object {
-
         private const val IDENT = "12345678901"
         private const val ÅR = 2020
     }

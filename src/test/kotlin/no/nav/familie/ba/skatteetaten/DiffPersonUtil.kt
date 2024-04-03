@@ -11,14 +11,16 @@ import kotlin.io.path.Path
  * Sammenligner 2 uttrekk av personer-kallet.
  */
 fun main() {
-    val personer = objectMapper.readValue(
-        Path("./person-før.json").toFile(),
-        SkatteetatenPersonerResponse::class.java,
-    ).brukere.map { it.ident }.sorted()
-    val personerEtter = objectMapper.readValue(
-        Path("./person-etter.json").toFile(),
-        SkatteetatenPersonerResponse::class.java,
-    ).brukere.map { it.ident }.sorted()
+    val personer =
+        objectMapper.readValue(
+            Path("./person-før.json").toFile(),
+            SkatteetatenPersonerResponse::class.java,
+        ).brukere.map { it.ident }.sorted()
+    val personerEtter =
+        objectMapper.readValue(
+            Path("./person-etter.json").toFile(),
+            SkatteetatenPersonerResponse::class.java,
+        ).brukere.map { it.ident }.sorted()
     val stopWatch = StopWatch()
     stopWatch.start()
     val diffFørEtter = personer.minus(personerEtter.toHashSet())

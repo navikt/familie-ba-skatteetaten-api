@@ -8,7 +8,6 @@ import java.net.InetAddress
 
 @Configuration
 class BaSakConfig {
-
     @Bean("mock-ba-sak")
     @Profile("mock-ba-sak")
     fun integrationMockServer(): MockWebServer {

@@ -12,15 +12,16 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 @Component
-class BasakPersonerClient @Autowired constructor(
-    @param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,
-    @Qualifier("azure-longtimeout") restOperations: RestOperations,
-) : AbstractRestClient(restOperations, "skatt.personer") {
-
-    fun hentPersoner(aar: String): SkatteetatenPersonerResponse {
-        val uri = URI.create("$sakServiceUri/skatt/personer?aar=$aar")
-        val response: Ressurs<SkatteetatenPersonerResponse> = getForEntity(uri)
-        if (response.status == Ressurs.Status.SUKSESS && response.data == null) error("Ressurs har status suksess, men mangler data")
-        return response.getDataOrThrow()
+class BasakPersonerClient
+    @Autowired
+    constructor(
+        @param:Value("\${BA_SAK_API_URL}") private val sakServiceUri: String,
+        @Qualifier("azure-longtimeout") restOperations: RestOperations,
+    ) : AbstractRestClient(restOperations, "skatt.personer") {
+        fun hentPersoner(aar: String): SkatteetatenPersonerResponse {
+            val uri = URI.create("$sakServiceUri/skatt/personer?aar=$aar")
+            val response: Ressurs<SkatteetatenPersonerResponse> = getForEntity(uri)
+            if (response.status == Ressurs.Status.SUKSESS && response.data == null) error("Ressurs har status suksess, men mangler data")
+            return response.getDataOrThrow()
+        }
     }
-}

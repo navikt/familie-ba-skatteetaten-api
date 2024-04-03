@@ -38,7 +38,6 @@ import java.time.temporal.ChronoUnit
 )
 @EnableScheduling
 class ApplicationConfig {
-
     @Bean
     fun servletWebServerFactory(): ServletWebServerFactory {
         val serverFactory = JettyServletWebServerFactory()

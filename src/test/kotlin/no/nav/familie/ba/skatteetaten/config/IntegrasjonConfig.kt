@@ -16,7 +16,6 @@ import java.time.temporal.ChronoUnit
 @Configuration
 @Profile("integrationtest")
 class IntegrasjonConfig {
-
     /**
      * Overstyrer read og connect timeout
      */
