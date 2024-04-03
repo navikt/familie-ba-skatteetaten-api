@@ -20,12 +20,15 @@ import java.time.DateTimeException
 
 @ControllerAdvice
 class ApiExceptionHandler {
-
     private val logger = LoggerFactory.getLogger(ApiExceptionHandler::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @ExceptionHandler(Throwable::class)
-    fun handleThrowable(throwable: Throwable, response: HttpServletResponse, request: HttpServletRequest) {
+    fun handleThrowable(
+        throwable: Throwable,
+        response: HttpServletResponse,
+        request: HttpServletRequest,
+    ) {
         val callId = MDC.get(MDCConstants.MDC_CALL_ID) ?: IdUtils.generateId()
         val mostSpecificThrowable = NestedExceptionUtils.getMostSpecificCause(throwable)
         val className = if (mostSpecificThrowable != null) "[${mostSpecificThrowable::class.java.name}] " else ""
@@ -36,7 +39,11 @@ class ApiExceptionHandler {
     }
 
     @ExceptionHandler(value = [HttpMessageConversionException::class, HttpMediaTypeNotSupportedException::class])
-    fun onSafeHttpExceptions(ex: HttpMessageConversionException, response: HttpServletResponse, request: HttpServletRequest) {
+    fun onSafeHttpExceptions(
+        ex: HttpMessageConversionException,
+        response: HttpServletResponse,
+        request: HttpServletRequest,
+    ) {
         val callId = MDC.get(MDCConstants.MDC_CALL_ID) ?: IdUtils.generateId()
         val mostSpecificThrowable = NestedExceptionUtils.getMostSpecificCause(ex)
         val className = if (mostSpecificThrowable != null) "[${mostSpecificThrowable::class.java.name}] " else ""
@@ -50,7 +57,11 @@ class ApiExceptionHandler {
     }
 
     @ExceptionHandler(value = [JwtTokenMissingException::class, JwtTokenUnauthorizedException::class])
-    fun onJwtTokenException(ex: RuntimeException, response: HttpServletResponse, request: HttpServletRequest) {
+    fun onJwtTokenException(
+        ex: RuntimeException,
+        response: HttpServletResponse,
+        request: HttpServletRequest,
+    ) {
         val callId = MDC.get(MDCConstants.MDC_CALL_ID) ?: IdUtils.generateId()
         val mostSpecificThrowable = NestedExceptionUtils.getMostSpecificCause(ex)
         val className = if (mostSpecificThrowable != null) "[${mostSpecificThrowable::class.java.name}] " else ""
@@ -62,8 +73,18 @@ class ApiExceptionHandler {
         )
     }
 
-    @ExceptionHandler(value = [MissingServletRequestParameterException::class, IllegalArgumentException::class, ConstraintViolationException::class, DateTimeException::class])
-    fun onConstraintViolation(ex: Exception, response: HttpServletResponse) {
+    @ExceptionHandler(
+        value = [
+            MissingServletRequestParameterException::class,
+            IllegalArgumentException::class,
+            ConstraintViolationException::class,
+            DateTimeException::class,
+        ],
+    )
+    fun onConstraintViolation(
+        ex: Exception,
+        response: HttpServletResponse,
+    ) {
         logger.warn("Valideringsfeil av request. Se securelog for detaljer")
         secureLogger.warn("Valideringsfeil av request", ex)
 

@@ -10,14 +10,16 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.AsyncHandlerInterceptor
-import java.util.*
 
 @Component
 class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
-
     private val consumerIdCounters = mutableMapOf<String, Counter>()
 
-    override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+    override fun preHandle(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any,
+    ): Boolean {
         val infoFraToken = hentInfoFraToken(request)
 
         LOG.info("[pre-handle] $infoFraToken - ${request.method}: ${request.requestURI}")
@@ -30,7 +32,18 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
         handler: Any,
         ex: Exception?,
     ) {
-        val headers = request.getHeaderNames()?.toList()?.map { headerName -> if (headerName == "Authorization") Pair("Authorization", request.getHeader(headerName)?.substring(0, 15)) else Pair(headerName, request.getHeader(headerName)) }
+        val headers =
+            request.getHeaderNames()?.toList()?.map {
+                    headerName ->
+                if (headerName == "Authorization") {
+                    Pair(
+                        "Authorization",
+                        request.getHeader(headerName)?.substring(0, 15),
+                    )
+                } else {
+                    Pair(headerName, request.getHeader(headerName))
+                }
+            }
         SECURE_LOG.info("Request med ${request.requestURI } ${response.status} $headers")
 
         val infoFraToken = hentInfoFraToken(request)
@@ -67,16 +80,28 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
     private fun hentConsumerId(request: HttpServletRequest): String {
         val jwtClaims = hentClaims(request)
 
-        return if ((jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID") == null) "MANGLER" else (jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID").toString()
+        return if ((
+                jwtClaims?.get(
+                    "consumer",
+                ) as? Map<String, String>
+            )?.get(
+                "ID",
+            ) == null
+        ) {
+            "MANGLER"
+        } else {
+            (jwtClaims?.get("consumer") as? Map<String, String>)?.get("ID").toString()
+        }
     }
 
     private fun hentClaims(request: HttpServletRequest): JwtTokenClaims? {
         val authorizationHeader = request.getHeader("Authorization")
-        val token = if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            authorizationHeader.substring(7)
-        } else {
-            null
-        }
+        val token =
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                authorizationHeader.substring(7)
+            } else {
+                null
+            }
 
         if (token == null) {
             return null

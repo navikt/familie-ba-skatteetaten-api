@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse
 import java.io.IOException
 
 class SecurityHeaderFilter : HttpFilter() {
-
     @Throws(ServletException::class, IOException::class)
     override fun doFilter(
         httpServletRequest: HttpServletRequest,

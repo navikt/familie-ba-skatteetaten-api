@@ -25,7 +25,9 @@ import java.time.Year
 @Validated
 @RequestMapping("/api/v1")
 @ProtectedWithClaims(issuer = "maskinporten", claimMap = ["scope=nav:familie/v1/barnetrygd/utvidet"])
-class SkatteetatenController(@Autowired(required = true) val service: SkatteetatenService) {
+class SkatteetatenController(
+    @Autowired(required = true) val service: SkatteetatenService,
+) {
     private val logger = LoggerFactory.getLogger(SkatteetatenController::class.java)
 
     @GetMapping(

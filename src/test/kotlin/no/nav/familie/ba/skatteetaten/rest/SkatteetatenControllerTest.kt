@@ -7,19 +7,20 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 class SkatteetatenControllerTest {
-
     @Test
     fun `erSkatteetatenPeriodeRequestGyldig skal fange opp ugyldig input`() {
         val skatteetatenController = SkatteetatenController(mockk())
 
-        val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
-            aar = "2020",
-            identer = listOf("12345678910", "123"),
-        )
+        val skatteetatenPerioderRequest =
+            SkatteetatenPerioderRequest(
+                aar = "2020",
+                identer = listOf("12345678910", "123"),
+            )
 
-        val error = assertThrows(
-            IllegalArgumentException::class.java,
-        ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
+        val error =
+            assertThrows(
+                IllegalArgumentException::class.java,
+            ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
 
         assertEquals(error.message, "Ikke et gyldig fødselsnummer: 123")
     }
@@ -28,10 +29,11 @@ class SkatteetatenControllerTest {
     fun `erSkatteetatenPeriodeRequestGyldig skal ikke kaste feil ved gyldig input`() {
         val skatteetatenController = SkatteetatenController(mockk())
 
-        val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
-            aar = "2020",
-            identer = listOf("27903249671"),
-        )
+        val skatteetatenPerioderRequest =
+            SkatteetatenPerioderRequest(
+                aar = "2020",
+                identer = listOf("27903249671"),
+            )
 
         skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest)
     }
@@ -40,14 +42,16 @@ class SkatteetatenControllerTest {
     fun `erSkatteetatenPeriodeRequestGyldig skal kaste feil ved ugyldig år`() {
         val skatteetatenController = SkatteetatenController(mockk())
 
-        val skatteetatenPerioderRequest = SkatteetatenPerioderRequest(
-            aar = "sdsdf",
-            identer = listOf("27903249671"),
-        )
+        val skatteetatenPerioderRequest =
+            SkatteetatenPerioderRequest(
+                aar = "sdsdf",
+                identer = listOf("27903249671"),
+            )
 
-        val error = assertThrows(
-            IllegalArgumentException::class.java,
-        ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
+        val error =
+            assertThrows(
+                IllegalArgumentException::class.java,
+            ) { skatteetatenController.erSkatteetatenPeriodeRequestGyldig(skatteetatenPerioderRequest) }
         assertEquals(error.message, "For input string: \"sdsdf\"")
     }
 
@@ -66,16 +70,17 @@ class SkatteetatenControllerTest {
         )
 
         identer.add("12345678901")
-        val error = assertThrows(
-            IllegalArgumentException::class.java,
-        ) {
-            skatteetatenController.erSkatteetatenPeriodeRequestGyldig(
-                SkatteetatenPerioderRequest(
-                    aar = "2020",
-                    identer = identer,
-                ),
-            )
-        }
+        val error =
+            assertThrows(
+                IllegalArgumentException::class.java,
+            ) {
+                skatteetatenController.erSkatteetatenPeriodeRequestGyldig(
+                    SkatteetatenPerioderRequest(
+                        aar = "2020",
+                        identer = identer,
+                    ),
+                )
+            }
         assertEquals(error.message, "Maks antall identer er 10000")
     }
 }
