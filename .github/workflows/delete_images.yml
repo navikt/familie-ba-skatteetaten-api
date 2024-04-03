@@ -13,4 +13,4 @@ jobs:
         with:
           package-name: 'familie-ba-skatteetaten-api'
           package-type: 'container'
-          min-versions-to-keep: 20
+          #min-versions-to-keep: 20
