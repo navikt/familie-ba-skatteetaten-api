@@ -23,7 +23,10 @@ management:
   endpoints.web:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
-  metrics.export.prometheus.enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 
 
