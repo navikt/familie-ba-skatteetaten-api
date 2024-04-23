@@ -41,7 +41,11 @@ class SkatteetatenController(
         aar: Int,
     ): ResponseEntity<SkatteetatenPersonerResponse> {
         logger.info("Henter skatteetaten-personer for år=$aar")
-        return ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
+        return if (aar > SISTE_ÅR_MED_SÆRFRADRAG_UTVIDET_BARNETRYGD) {
+            ResponseEntity(SkatteetatenPersonerResponse(), HttpStatus.OK)
+        } else {
+            ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
+        }
     }
 
     @PostMapping(
@@ -74,5 +78,6 @@ class SkatteetatenController(
 
     companion object {
         const val MAX_ANTALL_I_PERIODER = 10000
+        const val SISTE_ÅR_MED_SÆRFRADRAG_UTVIDET_BARNETRYGD = 2023
     }
 }
