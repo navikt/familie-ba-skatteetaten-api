@@ -8,12 +8,12 @@ import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPersonerRespo
 import org.springframework.stereotype.Service
 
 @Service
-class SkatteetatenService(val basakPersonerClient: BasakPersonerClient, val basakPerioderClient: BasakPerioderClient) {
-    fun hentPerioderMedUtvidetBarnetrygd(perioderRequest: SkatteetatenPerioderRequest): SkatteetatenPerioderResponse {
-        return basakPerioderClient.hentPerioder(perioderRequest)
-    }
+class SkatteetatenService(
+    val basakPersonerClient: BasakPersonerClient,
+    val basakPerioderClient: BasakPerioderClient,
+) {
+    fun hentPerioderMedUtvidetBarnetrygd(perioderRequest: SkatteetatenPerioderRequest): SkatteetatenPerioderResponse =
+        basakPerioderClient.hentPerioder(perioderRequest)
 
-    fun finnPersonerMedUtvidetBarnetrygd(aar: String): SkatteetatenPersonerResponse {
-        return basakPersonerClient.hentPersoner(aar)
-    }
+    fun finnPersonerMedUtvidetBarnetrygd(aar: String): SkatteetatenPersonerResponse = basakPersonerClient.hentPersoner(aar)
 }

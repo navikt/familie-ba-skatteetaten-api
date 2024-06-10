@@ -25,8 +25,8 @@ class IntegrasjonConfig {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         internLoggerInterceptor: InternLoggerInterceptor,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
-    ): RestOperations {
-        return RestTemplateBuilder()
+    ): RestOperations =
+        RestTemplateBuilder()
             .setReadTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
             .setConnectTimeout(Duration.of(10, ChronoUnit.SECONDS)) // overstyrt
             .additionalInterceptors(
@@ -34,5 +34,4 @@ class IntegrasjonConfig {
                 bearerTokenClientInterceptor,
                 MdcValuesPropagatingClientInterceptor(),
             ).build()
-    }
 }

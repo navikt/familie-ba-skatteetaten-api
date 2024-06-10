@@ -33,8 +33,7 @@ class MaskinportenTokenLoggingInterceptor : AsyncHandlerInterceptor {
         ex: Exception?,
     ) {
         val headers =
-            request.getHeaderNames()?.toList()?.map {
-                    headerName ->
+            request.getHeaderNames()?.toList()?.map { headerName ->
                 if (headerName == "Authorization") {
                     Pair(
                         "Authorization",

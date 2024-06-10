@@ -46,9 +46,7 @@ class IntegrationTest {
         headers.clear()
     }
 
-    protected fun localhost(uri: String): String {
-        return "http://localhost:$port$uri"
-    }
+    protected fun localhost(uri: String): String = "http://localhost:$port$uri"
 
     protected fun withClientToken(clientToken: MaskinportenToken = MaskinportenToken()) {
         headers.setBearerAuth(TokenTestUtil.clientToken(mockOAuth2Server, clientToken, maskinportenWellKnownUrl))

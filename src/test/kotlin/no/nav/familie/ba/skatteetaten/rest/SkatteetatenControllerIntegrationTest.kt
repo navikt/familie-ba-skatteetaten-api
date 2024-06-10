@@ -118,9 +118,10 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
         assertThat(response.body!!).isEqualToIgnoringWhitespace(readResource("requests/perioder-response-expected.json"))
     }
 
-    private fun readResource(path: String): String {
-        return this::class.java.classLoader.getResource(path)!!.readText()
-    }
+    private fun readResource(path: String): String =
+        this::class.java.classLoader
+            .getResource(path)!!
+            .readText()
 
     private fun enqueJson(obj: Any) {
         enqueJson(objectMapper.writeValueAsString(obj))
@@ -171,13 +172,12 @@ internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     private inline fun <reified T : Any> hentPerioder(
         ident: String = IDENT,
         aar: Int = ÅR,
-    ): ResponseEntity<T> {
-        return restTemplate.exchange(
+    ): ResponseEntity<T> =
+        restTemplate.exchange(
             localhost("/api/v1/perioder"),
             HttpMethod.POST,
             HttpEntity(SkatteetatenPerioderRequest(aar.toString(), listOf(ident)), headers),
         )
-    }
 
     companion object {
         private const val IDENT = "12345678901"
