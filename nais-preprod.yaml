@@ -63,6 +63,14 @@ spec:
       rules:
         - application: familie-ba-sak
           cluster: dev-gcp
+  observability:
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
+    autoInstrumentation:
+      enabled: true
+      runtime: java
 
   env:
     - name: SPRING_PROFILES_ACTIVE
