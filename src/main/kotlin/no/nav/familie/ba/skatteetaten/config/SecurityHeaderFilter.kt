@@ -25,9 +25,8 @@ class SecurityHeaderFilter : HttpFilter() {
         filterChain.doFilter(httpServletRequest, httpServletResponse)
     }
 
-    private fun resolveUserId(httpServletRequest: HttpServletRequest): Cookie {
-        return httpServletRequest.cookies?.firstOrNull { it -> "RUIDC" == it.name }!!
-    }
+    private fun resolveUserId(httpServletRequest: HttpServletRequest): Cookie =
+        httpServletRequest.cookies?.firstOrNull { it -> "RUIDC" == it.name }!!
 
     override fun init(filterConfig: FilterConfig) {
         // NOP

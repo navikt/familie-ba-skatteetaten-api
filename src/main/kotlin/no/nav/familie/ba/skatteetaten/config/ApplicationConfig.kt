@@ -68,8 +68,8 @@ class ApplicationConfig {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         internLoggerInterceptor: InternLoggerInterceptor,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
-    ): RestOperations {
-        return RestTemplateBuilder()
+    ): RestOperations =
+        RestTemplateBuilder()
             .setReadTimeout(READ_CONNECTION_LONG_TIMEOUT)
             .setConnectTimeout(READ_CONNECTION_LONG_TIMEOUT)
             .additionalInterceptors(
@@ -77,7 +77,6 @@ class ApplicationConfig {
                 bearerTokenClientInterceptor,
                 MdcValuesPropagatingClientInterceptor(),
             ).build()
-    }
 
     /**
      * Overskrever OAuth2HttpClient som settes opp i token-support som ikke kan få med objectMapper fra felles
@@ -86,15 +85,15 @@ class ApplicationConfig {
      */
     @Bean
     @Primary
-    fun oAuth2HttpClient(): OAuth2HttpClient {
-        return DefaultOAuth2HttpClient(
+    fun oAuth2HttpClient(): OAuth2HttpClient =
+        DefaultOAuth2HttpClient(
             RestClient.create(
                 RestTemplateBuilder()
                     .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)).build(),
+                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                    .build(),
             ),
         )
-    }
 
     companion object {
         private val log = LoggerFactory.getLogger(ApplicationConfig::class.java)

@@ -50,7 +50,11 @@ fun main() {
             SkatteetatenPersonerResponse::class.java,
         )
 
-    val første1000identer = responsePersoner.body?.brukere?.take(1000)?.map { it.ident }!!
+    val første1000identer =
+        responsePersoner.body
+            ?.brukere
+            ?.take(1000)
+            ?.map { it.ident }!!
     println(objectMapper.writeValueAsString(første1000identer))
 
     val entityPerioder: HttpEntity<*> = HttpEntity<Any?>(SkatteetatenPerioderRequest("2021", første1000identer), httpHeaders)
@@ -73,10 +77,11 @@ class MaskinportenClient {
     private fun createSignedJWT(
         rsaJwk: RSAKey,
         claimsSet: JWTClaimsSet?,
-    ): SignedJWT {
-        return try {
+    ): SignedJWT =
+        try {
             val header =
-                JWSHeader.Builder(JWSAlgorithm.RS256)
+                JWSHeader
+                    .Builder(JWSAlgorithm.RS256)
                     .keyID(rsaJwk.keyID)
                     .type(JOSEObjectType.JWT)
             val signedJWT = SignedJWT(header.build(), claimsSet)
@@ -86,7 +91,6 @@ class MaskinportenClient {
         } catch (e: JOSEException) {
             throw RuntimeException(e)
         }
-    }
 
     fun hentToken(
         scope: String,
@@ -96,7 +100,8 @@ class MaskinportenClient {
         val rsaKey = RSAKey.parse(jwkPrivate)
         val time = Instant.now()
         val jwtClaimsSet =
-            JWTClaimsSet.Builder()
+            JWTClaimsSet
+                .Builder()
                 .audience(AUD)
                 .issuer(clientId)
                 .issueTime(Date.from(time))
@@ -111,12 +116,13 @@ class MaskinportenClient {
         requestBody.add("assertion", signedJWT.serialize())
         val httpEntity = HttpEntity(requestBody, headers)
         val json =
-            restTemplate.exchange(
-                TOKEN_ENDPOINT,
-                HttpMethod.POST,
-                httpEntity,
-                String::class.java,
-            ).body!!
+            restTemplate
+                .exchange(
+                    TOKEN_ENDPOINT,
+                    HttpMethod.POST,
+                    httpEntity,
+                    String::class.java,
+                ).body!!
 
         return json
     }

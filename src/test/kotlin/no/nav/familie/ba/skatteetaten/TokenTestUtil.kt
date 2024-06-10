@@ -16,11 +16,12 @@ object TokenTestUtil {
             claims["consumer"] = token.consumer
         }
 
-        return mockOAuth2Server.issueToken(
-            issuerId = maskinportenWellKnownUrl,
-            subject = thisId,
-            claims = claims,
-        ).serialize()
+        return mockOAuth2Server
+            .issueToken(
+                issuerId = maskinportenWellKnownUrl,
+                subject = thisId,
+                claims = claims,
+            ).serialize()
     }
 
     data class MaskinportenToken(

@@ -12,15 +12,21 @@ import kotlin.io.path.Path
  */
 fun main() {
     val personer =
-        objectMapper.readValue(
-            Path("./person-før.json").toFile(),
-            SkatteetatenPersonerResponse::class.java,
-        ).brukere.map { it.ident }.sorted()
+        objectMapper
+            .readValue(
+                Path("./person-før.json").toFile(),
+                SkatteetatenPersonerResponse::class.java,
+            ).brukere
+            .map { it.ident }
+            .sorted()
     val personerEtter =
-        objectMapper.readValue(
-            Path("./person-etter.json").toFile(),
-            SkatteetatenPersonerResponse::class.java,
-        ).brukere.map { it.ident }.sorted()
+        objectMapper
+            .readValue(
+                Path("./person-etter.json").toFile(),
+                SkatteetatenPersonerResponse::class.java,
+            ).brukere
+            .map { it.ident }
+            .sorted()
     val stopWatch = StopWatch()
     stopWatch.start()
     val diffFørEtter = personer.minus(personerEtter.toHashSet())
@@ -31,9 +37,8 @@ fun main() {
     println("Tid: ${stopWatch.totalTimeSeconds}s")
 }
 
-private fun lesFil(filnavn: String): String {
-    return Files.readString(
+private fun lesFil(filnavn: String): String =
+    Files.readString(
         Path(filnavn),
         StandardCharsets.UTF_8,
     )
-}
