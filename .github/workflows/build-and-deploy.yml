@@ -50,7 +50,7 @@ jobs:
 
       - uses: nais/docker-build-push@v0
         id: docker-push
-        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
         with:
           team: teamfamilie
           push_image: true
@@ -61,7 +61,7 @@ jobs:
           byosbom: target/classes/META-INF/sbom/application.cdx.json
 
       - name: Deploy til dev-gcp
-        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
