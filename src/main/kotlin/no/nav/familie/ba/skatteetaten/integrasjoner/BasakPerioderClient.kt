@@ -23,7 +23,7 @@ class BasakPerioderClient
         @Qualifier("azure-longtimeout") restOperations: RestOperations,
     ) : AbstractRestClient(restOperations, "skatt.perioder") {
         fun hentPerioder(request: SkatteetatenPerioderRequest): SkatteetatenPerioderResponse {
-            val url = URI.create("$sakServiceUri/skatt/perioder")
+            val uri = URI.create("$sakServiceUri/skatt/perioder")
             val response: Ressurs<SkatteetatenPerioderResponse> = postForEntity(uri, request)
             if (response.status == Ressurs.Status.SUKSESS && response.data == null) error("Ressurs har status suksess, men mangler data")
             return response.getDataOrThrow()
