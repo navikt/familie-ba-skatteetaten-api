@@ -32,7 +32,8 @@ jobs:
     permissions:
       packages: write
       pull-requests: write
-      contents: read
+      contents: write # to write sarif
+      security-events: write # push sarif to github security
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +61,22 @@ jobs:
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           byosbom: target/classes/META-INF/sbom/application.cdx.json
 
+      - name: Run Trivy vulnerability scanner
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ steps.docker-push.outputs.image }}'
+          format: 'sarif'
+          output: 'trivy.sarif'
+          severity: 'HIGH,CRITICAL'
+          limit-severities-for-sarif: true
+
+      - name: Upload results to GitHub Security
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy.sarif'
+
       - name: Deploy til dev-gcp
         if: github.event.pull_request.user.login != 'dependabot[bot]'
         uses: nais/deploy/actions/deploy@v2
@@ -68,12 +85,15 @@ jobs:
           RESOURCE: nais-preprod.yaml
           IMAGE: ${{ steps.docker-push.outputs.image }}
 
+
+
       - name: Dependabot metadata
         if: github.event.pull_request.user.login == 'dependabot[bot]'
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+
 
       - name: Approve a PR
         if: github.event.pull_request.user.login == 'dependabot[bot]'
