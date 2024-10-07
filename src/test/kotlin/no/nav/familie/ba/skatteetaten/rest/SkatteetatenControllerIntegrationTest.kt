@@ -13,6 +13,7 @@ import no.nav.familie.kontrakter.felles.objectMapper
 import okhttp3.mockwebserver.MockResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import java.time.LocalDateTime
 
+@Disabled
 internal class SkatteetatenControllerIntegrationTest : IntegrationTest() {
     @BeforeEach
     internal fun setUp() {

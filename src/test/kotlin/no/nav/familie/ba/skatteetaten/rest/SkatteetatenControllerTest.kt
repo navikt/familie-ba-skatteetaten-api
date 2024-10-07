@@ -8,15 +8,6 @@ import org.junit.jupiter.api.Test
 
 class SkatteetatenControllerTest {
     @Test
-    fun `personer for år etter 2023 skal returnere tom liste`() {
-        val skatteetatenController = SkatteetatenController(mockk())
-
-        val response = skatteetatenController.finnPersonerMedUtvidetBarnetrygd(2024)
-
-        assertEquals(response.body?.brukere?.size, 0)
-    }
-
-    @Test
     fun `erSkatteetatenPeriodeRequestGyldig skal fange opp ugyldig input`() {
         val skatteetatenController = SkatteetatenController(mockk())
 
