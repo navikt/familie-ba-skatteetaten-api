@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Min
 import no.nav.familie.ba.skatteetaten.service.SkatteetatenService
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderRequest
 import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPerioderResponse
-import no.nav.familie.eksterne.kontrakter.skatteetaten.SkatteetatenPersonerResponse
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,13 +38,12 @@ class SkatteetatenController(
         @Max(value = 2050, message = "Ugyldig format, kan ikke spørre om år etter 2050")
         @RequestParam(value = "aar", required = true)
         aar: Int,
-    ): ResponseEntity<SkatteetatenPersonerResponse> {
+    ): ResponseEntity<String> {
         logger.info("Henter skatteetaten-personer for år=$aar")
-        return if (aar > SISTE_ÅR_MED_SÆRFRADRAG_UTVIDET_BARNETRYGD) {
-            ResponseEntity(SkatteetatenPersonerResponse(), HttpStatus.OK)
-        } else {
-            ResponseEntity(service.finnPersonerMedUtvidetBarnetrygd(aar.toString()), HttpStatus.OK)
-        }
+        return ResponseEntity.status(HttpStatus.GONE).body(
+            "Tjenesten skrudd av etter avtale med Skatteetaten. " +
+                "Vennligst slutt å kall tjenesten",
+        )
     }
 
     @PostMapping(
